@@ -5,9 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Noosa 行程 2026/07/04–05</title>
 <style>
-/* ─────────────────────────────────────────────
-   RESET & BASE
-───────────────────────────────────────────── */
+/* ── RESET & BASE ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -27,191 +25,254 @@
   --text-s:   #718096;
   --border:   #e2e8f0;
   --bg:       #f7fafc;
+
+  --fs-2xs: clamp(10px, 2.8vw, 12px);
+  --fs-xs:  clamp(11px, 3.2vw, 13px);
+  --fs-sm:  clamp(12px, 3.6vw, 14px);
+  --fs-base:clamp(14px, 4.2vw, 16px);
+  --fs-md:  clamp(15px, 4.6vw, 18px);
+  --fs-lg:  clamp(16px, 5vw,   20px);
+  --fs-xl:  clamp(20px, 6vw,   26px);
 }
 
-html { scroll-behavior: smooth; }
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
 
 body {
   font-family: -apple-system, 'Segoe UI', 'Microsoft JhengHei', 'PingFang TC', sans-serif;
-  background: #edf2f7;
   color: var(--text);
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: var(--fs-base);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  background: #2d3748;
 }
 
 a { color: inherit; text-decoration: none; }
 
-/* ─────────────────────────────────────────────
-   MOBILE STICKY NAV
-───────────────────────────────────────────── */
-.mobile-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: white;
-  border-bottom: 2px solid var(--orange-l);
+/* ── APP SHELL ── */
+.app {
   display: flex;
-  align-items: center;
-  gap: 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-.mobile-nav .nav-logo {
-  padding: 12px 14px;
-  font-weight: 800;
-  font-size: 13px;
-  color: var(--orange-d);
-  border-right: 1px solid var(--border);
-  white-space: nowrap;
-}
-.mobile-nav .nav-tabs {
-  display: flex;
-  overflow-x: auto;
-  scrollbar-width: none;
-  flex: 1;
-}
-.mobile-nav .nav-tabs::-webkit-scrollbar { display: none; }
-.mobile-nav .nav-tab {
-  padding: 12px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-s);
-  white-space: nowrap;
-  cursor: pointer;
-  border-bottom: 3px solid transparent;
-  transition: all 0.2s;
-  flex-shrink: 0;
-}
-.mobile-nav .nav-tab.active {
-  color: var(--orange-d);
-  border-bottom-color: var(--orange);
-}
-.mobile-nav .print-btn {
-  padding: 8px 14px;
-  margin: 6px 10px;
-  background: var(--orange);
-  color: white;
-  font-size: 12px;
-  font-weight: 700;
-  border-radius: 8px;
-  cursor: pointer;
-  border: none;
-  white-space: nowrap;
-  flex-shrink: 0;
+  height: 100vh;
+  position: relative;
 }
 
-/* ─────────────────────────────────────────────
-   SECTIONS (mobile-first, scroll layout)
-───────────────────────────────────────────── */
-.section {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 16px 14px 0;
+/* ────────────────────────────
+   MAP PANEL (full-screen bg)
+──────────────────────────── */
+.map-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: #e8eaed;
 }
-.section:last-child { padding-bottom: 40px; }
 
-/* ─────────────────────────────────────────────
-   COVER CARD
-───────────────────────────────────────────── */
-.cover-card {
-  background: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  margin-bottom: 14px;
+.map-wrap {
+  position: absolute;
+  inset: 0;
+  display: none;
 }
-.cover-hero {
-  background: linear-gradient(135deg, #f6ad55 0%, #ed8936 50%, #dd6b20 100%);
-  padding: 28px 20px 22px;
-  text-align: center;
-  color: white;
-}
-.cover-hero .emoji { font-size: 36px; display: block; margin-bottom: 8px; }
-.cover-hero h1 { font-size: 22px; font-weight: 800; letter-spacing: 2px; }
-.cover-hero .sub { font-size: 12px; opacity: 0.85; margin-top: 5px; letter-spacing: 0.5px; }
-.cover-hero .date-badge {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 5px 18px;
-  background: rgba(255,255,255,0.25);
-  border: 1.5px solid rgba(255,255,255,0.5);
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 700;
-  backdrop-filter: blur(4px);
-}
-.cover-meta {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid var(--border);
-}
-.cover-meta-item {
-  padding: 12px 8px;
-  text-align: center;
-  border-right: 1px solid var(--border);
-}
-.cover-meta-item:last-child { border-right: none; }
-.cover-meta-item .mi-icon { font-size: 18px; }
-.cover-meta-item .mi-label { font-size: 9px; color: var(--gray); margin-top: 1px; }
-.cover-meta-item .mi-val { font-size: 11px; font-weight: 700; color: var(--text); }
+.map-wrap.active { display: block; }
+.map-wrap iframe { width: 100%; height: 100%; border: 0; display: block; }
 
-/* ─────────────────────────────────────────────
-   DAY HEADER
-───────────────────────────────────────────── */
-.day-card {
-  background: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  margin-bottom: 14px;
-}
-.day-header {
-  padding: 16px 18px 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid var(--border);
-}
-.day-badge {
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 800;
-  color: white;
-  flex-shrink: 0;
-}
-.badge-d1 { background: linear-gradient(135deg, #4299e1, #2b6cb0); }
-.badge-d2 { background: linear-gradient(135deg, #48bb78, #276749); }
-.day-header-text .day-title { font-size: 15px; font-weight: 700; }
-.day-header-text .day-date { font-size: 12px; color: var(--text-s); margin-top: 1px; }
-
-/* ─────────────────────────────────────────────
-   MAP CARD
-───────────────────────────────────────────── */
-.map-card {
-  margin: 0 14px 0;
-  border: 1.5px solid var(--border);
+/* Route chips overlay on map (top of map) */
+.map-chips-overlay {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 10;
+  background: rgba(255,255,255,0.93);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 0;
-}
-.map-card-head {
   padding: 8px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.14);
+}
+
+/* Floating nav button on map */
+.map-nav-float {
+  position: absolute;
+  bottom: 148px;
+  right: 14px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 16px;
+  border-radius: 24px;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.28);
+  white-space: nowrap;
+}
+.map-nav-float.d1 { background: var(--blue); }
+.map-nav-float.d2 { background: var(--green); }
+
+/* ────────────────────────────
+   SIDEBAR / BOTTOM SHEET
+──────────────────────────── */
+.sidebar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 200;
+  background: white;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  max-height: 88vh;
+  transform: translateY(calc(100% - 124px));
+  transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+  will-change: transform;
+}
+.sidebar.expanded { transform: translateY(0); }
+
+/* Fixed top portion (always visible when peeking) */
+.sidebar-sticky { flex-shrink: 0; }
+
+/* Scrollable body */
+.sidebar-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  min-height: 0;
+}
+
+/* Handle */
+.sheet-handle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0 6px;
+  cursor: pointer;
+  gap: 8px;
+}
+.handle-bar {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: #cbd5e0;
+}
+.handle-hint {
+  font-size: var(--fs-xs);
+  color: var(--gray);
+  font-weight: 600;
+}
+
+/* Sidebar Header */
+.sidebar-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  padding: 2px 16px 10px;
+  cursor: pointer;
 }
-.map-card-head.d1 { background: linear-gradient(135deg, var(--blue-bg), var(--blue-l)); }
-.map-card-head.d2 { background: linear-gradient(135deg, var(--green-bg), var(--green-l)); }
-.map-card-head .map-title { font-size: 11px; font-weight: 700; color: var(--text); flex: 1; }
+.sidebar-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.s-emoji { font-size: 22px; }
+.sidebar-name {
+  font-size: var(--fs-base);
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: 0.5px;
+}
+.sidebar-sub {
+  font-size: var(--fs-2xs);
+  color: var(--text-s);
+  margin-top: 1px;
+}
+.print-btn {
+  padding: 6px 12px;
+  background: var(--orange);
+  color: white;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Day Tabs */
+.day-tabs {
+  display: flex;
+  border-top: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
+  flex-shrink: 0;
+}
+.day-tab {
+  flex: 1;
+  padding: 9px 8px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+  color: var(--text-s);
+  font-family: inherit;
+}
+.day-tab.active {
+  color: var(--orange-d);
+  border-bottom-color: var(--orange);
+  background: var(--orange-bg);
+}
+.day-tab .tab-label {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+.day-tab .tab-sub {
+  display: block;
+  font-size: var(--fs-2xs);
+  color: var(--gray);
+  margin-top: 1px;
+}
+.day-tab.active .tab-sub { color: var(--orange-d); opacity: 0.8; }
+
+/* Day Content */
+.day-content { display: none; }
+.day-content.active { display: block; }
+
+/* Route summary strip (top of each day) */
+.route-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.route-strip.d1 { background: linear-gradient(135deg, var(--blue-bg), #dbeeff); }
+.route-strip.d2 { background: linear-gradient(135deg, var(--green-bg), #d4f5e2); }
+.route-strip-label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* ── NAV BUTTON (in route strip) ── */
 .nav-btn {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   padding: 6px 12px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: var(--fs-sm);
   font-weight: 700;
   color: white;
   text-decoration: none;
@@ -220,56 +281,29 @@ a { color: inherit; text-decoration: none; }
 }
 .nav-btn.d1 { background: var(--blue); }
 .nav-btn.d2 { background: var(--green); }
-.map-frame {
-  height: 180px;
-  background: #f0f4f8;
-  position: relative;
-  overflow: hidden;
-}
-.map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
-.map-chips {
-  padding: 8px 12px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  align-items: center;
-  background: white;
-  border-top: 1px solid var(--border);
-}
-.chip {
-  font-size: 10px;
-  padding: 3px 9px;
-  border-radius: 10px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-.chip.d1 { background: var(--blue-bg); color: #2b6cb0; border: 1px solid var(--blue-l); }
-.chip.d2 { background: var(--green-bg); color: #276749; border: 1px solid var(--green-l); }
-.chip-arrow { color: var(--gray); font-size: 10px; }
 
-/* ─────────────────────────────────────────────
-   TIMELINE
-───────────────────────────────────────────── */
+/* ── TIMELINE ── */
 .timeline { padding: 8px 14px 14px; }
 .tl-item {
   display: grid;
-  grid-template-columns: 56px 24px 1fr;
+  grid-template-columns: clamp(52px, 15vw, 72px) clamp(20px, 6vw, 28px) 1fr;
   gap: 0 8px;
   margin-bottom: 2px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
 }
+.tl-item:hover { background: rgba(237,137,54,0.06); }
+.tl-item.selected { background: var(--orange-bg); outline: 2px solid var(--orange-l); }
 .tl-time {
-  font-size: 10px;
+  font-size: var(--fs-sm);
   color: var(--text-s);
   font-weight: 600;
   padding-top: 6px;
   text-align: right;
   line-height: 1.3;
 }
-.tl-axis {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+.tl-axis { display: flex; flex-direction: column; align-items: center; }
 .tl-dot {
   width: 12px;
   height: 12px;
@@ -285,16 +319,10 @@ a { color: inherit; text-decoration: none; }
 .dot-orange { color: var(--orange); background: var(--orange); }
 .dot-purple { color: var(--purple); background: var(--purple); }
 .dot-gray   { color: var(--gray);   background: var(--gray); }
-.tl-line {
-  flex: 1;
-  width: 2px;
-  background: var(--border);
-  margin-top: 3px;
-  min-height: 16px;
-}
+.tl-line { flex: 1; width: 2px; background: var(--border); margin-top: 3px; min-height: 16px; }
 .tl-body { padding: 3px 0 14px; }
 .tl-main {
-  font-size: 14px;
+  font-size: var(--fs-md);
   font-weight: 700;
   color: var(--text);
   line-height: 1.4;
@@ -308,9 +336,9 @@ a { color: inherit; text-decoration: none; }
   display: inline-flex;
   align-items: center;
   gap: 3px;
-  font-size: 11px;
+  font-size: var(--fs-sm);
   font-weight: 700;
-  padding: 3px 9px;
+  padding: 4px 10px;
   border-radius: 10px;
   text-decoration: none;
   transition: opacity 0.15s;
@@ -318,32 +346,20 @@ a { color: inherit; text-decoration: none; }
 .tl-link:hover { opacity: 0.75; }
 .tl-link.d1 { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-l); }
 .tl-link.d2 { background: var(--green-bg); color: #276749; border: 1px solid var(--green-l); }
-.tl-note {
-  font-size: 12px;
-  color: var(--text-s);
-  margin-top: 5px;
-  line-height: 1.5;
-}
+.tl-note { font-size: var(--fs-base); color: var(--text-s); margin-top: 5px; line-height: 1.5; }
 .tl-note strong { color: var(--orange-d); font-weight: 700; }
 .tl-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
-.tag {
-  font-size: 10px;
-  padding: 2px 8px;
-  border-radius: 8px;
-  font-weight: 600;
-}
-.tag-food   { background: #fff5f5; color: #c53030; border: 1px solid #fed7d7; }
-.tag-hike   { background: var(--green-bg); color: #276749; border: 1px solid var(--green-l); }
-.tag-drive  { background: var(--blue-bg); color: #2b6cb0; border: 1px solid var(--blue-l); }
-.tag-rest   { background: #faf5ff; color: #553c9a; border: 1px solid #d6bcfa; }
-.tag-shop   { background: #fffff0; color: #744210; border: 1px solid #f6e05e; }
-.tag-warn   { background: #fffaf0; color: #c05621; border: 1px solid var(--orange-l); }
+.tag { font-size: var(--fs-xs); padding: 2px 9px; border-radius: 8px; font-weight: 600; }
+.tag-food  { background: #fff5f5; color: #c53030; border: 1px solid #fed7d7; }
+.tag-hike  { background: var(--green-bg); color: #276749; border: 1px solid var(--green-l); }
+.tag-drive { background: var(--blue-bg); color: #2b6cb0; border: 1px solid var(--blue-l); }
+.tag-rest  { background: #faf5ff; color: #553c9a; border: 1px solid #d6bcfa; }
+.tag-shop  { background: #fffff0; color: #744210; border: 1px solid #f6e05e; }
+.tag-warn  { background: #fffaf0; color: #c05621; border: 1px solid var(--orange-l); }
 
-/* ─────────────────────────────────────────────
-   RESTAURANT TABLE
-───────────────────────────────────────────── */
+/* ── FOOD CARDS ── */
 .section-label {
-  font-size: 11px;
+  font-size: var(--fs-xs);
   font-weight: 700;
   color: var(--text-s);
   text-transform: uppercase;
@@ -366,37 +382,48 @@ a { color: inherit; text-decoration: none; }
   padding: 9px 11px;
 }
 .food-row:nth-child(even) { background: white; }
-.fr-type {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--orange-d);
-  padding-top: 1px;
-  line-height: 1.4;
-}
-.fr-info {}
-.fr-name { font-size: 13px; font-weight: 600; color: var(--text); }
+.fr-type { font-size: var(--fs-xs); font-weight: 700; color: var(--orange-d); padding-top: 1px; line-height: 1.4; }
+.fr-name { font-size: var(--fs-base); font-weight: 600; color: var(--text); }
 .fr-veg {
   display: inline-block;
   margin-top: 3px;
-  font-size: 10px;
-  padding: 1px 7px;
+  font-size: var(--fs-xs);
+  padding: 2px 8px;
   border-radius: 8px;
   background: var(--green-bg);
   color: #276749;
   border: 1px solid var(--green-l);
   font-weight: 600;
 }
-.fr-budget {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text);
-  white-space: nowrap;
-  padding-top: 2px;
-}
+.fr-budget { font-size: var(--fs-sm); font-weight: 700; color: var(--text); white-space: nowrap; padding-top: 2px; }
 
-/* ─────────────────────────────────────────────
-   TIPS BOX
-───────────────────────────────────────────── */
+/* Chips (used in map overlay) */
+.chip { font-size: var(--fs-xs); padding: 3px 9px; border-radius: 10px; font-weight: 600; white-space: nowrap; }
+.chip.d1 { background: var(--blue-bg); color: #2b6cb0; border: 1px solid var(--blue-l); }
+.chip.d2 { background: var(--green-bg); color: #276749; border: 1px solid var(--green-l); }
+.chip-arrow { color: var(--gray); font-size: var(--fs-xs); }
+
+/* Map updated toast (mobile) */
+.map-toast {
+  position: fixed;
+  bottom: 138px;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: rgba(45,55,72,0.88);
+  color: white;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.25s, transform 0.25s;
+  pointer-events: none;
+  z-index: 500;
+  white-space: nowrap;
+}
+.map-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── TIPS BOX ── */
 .tips-box {
   margin: 0 14px 14px;
   background: var(--orange-bg);
@@ -405,7 +432,7 @@ a { color: inherit; text-decoration: none; }
   padding: 12px 14px;
 }
 .tips-title {
-  font-size: 11px;
+  font-size: var(--fs-xs);
   font-weight: 700;
   color: var(--orange-d);
   text-transform: uppercase;
@@ -414,7 +441,7 @@ a { color: inherit; text-decoration: none; }
 }
 .tips-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
 .tips-list li {
-  font-size: 12px;
+  font-size: var(--fs-base);
   color: #744210;
   padding-left: 14px;
   position: relative;
@@ -422,673 +449,679 @@ a { color: inherit; text-decoration: none; }
 }
 .tips-list li::before { content: '▸'; position: absolute; left: 0; color: var(--orange); }
 
-/* ─────────────────────────────────────────────
-   OVERVIEW ROUTE LIST (cover page)
-───────────────────────────────────────────── */
-.ov-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  padding: 14px;
-}
-.ov-col {}
-.ov-day-label {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--orange-d);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 8px;
-}
-.ov-stop { display: flex; flex-direction: column; gap: 0; }
-.ov-row { display: flex; align-items: flex-start; gap: 8px; }
-.ov-dot-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-shrink: 0;
-  width: 10px;
-}
-.ov-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  border: 2px solid white;
-  box-shadow: 0 0 0 1.5px currentColor;
-  flex-shrink: 0;
-  margin-top: 3px;
-}
-.ov-vline { width: 1.5px; background: var(--border); height: 10px; }
-.ov-label { font-size: 11px; color: var(--text); line-height: 1.4; padding-bottom: 2px; }
-.ov-time { font-size: 9px; color: var(--gray); }
+/* ────────────────────────────
+   DESKTOP ≥ 768px
+──────────────────────────── */
+@media (min-width: 768px) {
+  body { background: #edf2f7; overflow: hidden; }
 
-/* ─────────────────────────────────────────────
-   BOTTOM SPACE
-───────────────────────────────────────────── */
-.spacer { height: 24px; }
+  .app { flex-direction: row; }
 
-/* ─────────────────────────────────────────────
-   TABLET / DESKTOP (≥ 640px)
-───────────────────────────────────────────── */
-@media (min-width: 640px) {
-  body { font-size: 14px; }
-  .section { padding: 20px 20px 0; }
-  .map-frame { height: 220px; }
-  .tl-item { grid-template-columns: 70px 28px 1fr; gap: 0 10px; }
-  .tl-time { font-size: 11px; }
-  .tl-main { font-size: 15px; }
-  .tl-note { font-size: 13px; }
-  .tips-list li { font-size: 13px; }
-  .ov-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-  .tips-list { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
-  .fr-name { font-size: 14px; }
-  .fr-budget { font-size: 13px; }
-}
-
-/* ─────────────────────────────────────────────
-   PRINT — A4 layout
-───────────────────────────────────────────── */
-@media print {
-  @page { size: A4; margin: 12mm 14mm; }
-  body { background: white; font-size: 9px; }
-
-  .mobile-nav { display: none !important; }
-
-  /* reset scroll layout → A4 pages */
-  body > * { display: none; }
-  #print-root { display: block !important; }
-
-  .section { max-width: none; padding: 0; }
-
-  .a4-page {
-    width: 100%;
-    min-height: 250mm;
-    page-break-after: always;
-    break-after: page;
-    padding: 0;
-    margin-bottom: 0;
+  /* Map panel becomes right side */
+  .map-panel {
+    position: relative;
+    inset: auto;
+    flex: 1;
+    height: 100vh;
+    z-index: 1;
   }
-  .a4-page:last-child { page-break-after: avoid; }
+  .map-nav-float {
+    bottom: 24px;
+    right: 16px;
+  }
+  .map-chips-overlay {
+    left: 12px;
+    right: 12px;
+    top: 12px;
+    max-width: none;
+  }
 
-  .cover-hero h1 { font-size: 18px; }
-  .cover-hero .sub { font-size: 10px; }
-  .ov-grid { padding: 10px; gap: 10px; }
-  .ov-label { font-size: 9.5px; }
+  /* Sidebar becomes left panel */
+  .sidebar {
+    position: relative;
+    bottom: auto; left: auto; right: auto;
+    transform: none !important;
+    transition: none;
+    width: 400px;
+    flex-shrink: 0;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    box-shadow: 2px 0 16px rgba(0,0,0,0.1);
+    z-index: 10;
+  }
 
-  .day-header { padding: 10px 14px; }
-  .day-header-text .day-title { font-size: 12px; }
+  /* Hide mobile-only handle */
+  .sheet-handle { display: none; }
+  .sidebar-header { cursor: default; }
 
-  .map-frame { height: 110px; }
-  .tl-item { grid-template-columns: 52px 20px 1fr; gap: 0 6px; }
-  .tl-time { font-size: 8.5px; padding-top: 4px; }
-  .tl-main { font-size: 10px; }
-  .tl-note { font-size: 8.5px; }
-  .tag { font-size: 8px; padding: 1px 5px; }
-  .tl-link { font-size: 8px; padding: 2px 6px; }
-  .timeline { padding: 4px 10px 8px; }
-  .tl-body { padding: 2px 0 8px; }
+  /* Larger font sizes in sidebar on desktop */
+  .tl-item { grid-template-columns: 72px 28px 1fr; }
+  .map-chips-overlay { font-size: 13px; }
 
-  .section-label { padding: 8px 10px 5px; font-size: 9px; }
-  .food-cards { padding: 0 10px 8px; gap: 3px; }
-  .food-row { padding: 6px 8px; }
+  /* Tips grid */
+  .tips-list { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
+}
+
+/* ────────────────────────────
+   PRINT — A4 layout
+──────────────────────────── */
+@media print {
+  @page { size: A4; margin: 10mm 12mm; }
+
+  html, body {
+    height: auto !important;
+    overflow: visible !important;
+    background: white !important;
+    font-size: 10px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .app { display: block !important; height: auto !important; }
+  .map-panel { display: none !important; }
+
+  .sidebar {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    display: block !important;
+  }
+  .sidebar-sticky { display: block; }
+  .sidebar-body { overflow: visible !important; height: auto !important; }
+
+  .sheet-handle { display: none !important; }
+  .print-btn { display: none !important; }
+  .sidebar-header { cursor: default; padding-bottom: 6px; }
+  .sidebar-name { font-size: 16px; }
+  .sidebar-sub { font-size: 10px; }
+
+  /* Show BOTH days when printing */
+  .day-content { display: block !important; }
+  .day-tabs { page-break-after: avoid; }
+  .day-tab { font-size: 10px; padding: 6px; }
+
+  .route-strip { padding: 6px 10px; }
+  .route-strip-label { font-size: 9px; }
+  .nav-btn { font-size: 8px; padding: 3px 8px; }
+
+  .tl-item {
+    grid-template-columns: 46px 18px 1fr;
+    gap: 0 5px;
+    margin-bottom: 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .tl-time { font-size: 8.5px; padding-top: 3px; }
+  .tl-dot { width: 9px; height: 9px; margin-top: 3px; }
+  .tl-dot.sm { width: 7px; height: 7px; margin-top: 4px; }
+  .tl-body { padding: 1px 0 7px; }
+  .tl-main { font-size: 10px; gap: 3px; }
+  .tl-links { gap: 3px; margin-top: 3px; }
+  .tl-link { font-size: 8px; padding: 1px 5px; }
+  .tl-note { font-size: 8.5px; margin-top: 3px; }
+  .tl-tags { gap: 2px; margin-top: 3px; }
+  .tag { font-size: 7.5px; padding: 1px 5px; }
+  .timeline { padding: 4px 8px 6px; }
+
+  .section-label { padding: 6px 10px 4px; font-size: 8.5px; }
+  .food-cards { padding: 0 8px 6px; gap: 2px; }
+  .food-row {
+    padding: 5px 8px;
+    grid-template-columns: 58px 1fr auto;
+    gap: 6px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
   .fr-type { font-size: 8.5px; }
-  .fr-name { font-size: 10.5px; }
-  .fr-veg { font-size: 8px; padding: 1px 5px; }
-  .fr-budget { font-size: 10px; }
+  .fr-name { font-size: 10px; }
+  .fr-veg { font-size: 7.5px; padding: 1px 5px; }
+  .fr-budget { font-size: 9.5px; }
 
-  .tips-box { margin: 0 10px 8px; padding: 8px 10px; }
-  .tips-title { font-size: 8.5px; }
+  .tips-box { margin: 4px 8px 6px; padding: 7px 10px; border-radius: 6px; }
+  .tips-title { font-size: 8.5px; margin-bottom: 5px; }
+  .tips-list { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 12px; }
   .tips-list li { font-size: 8.5px; }
-  .tips-list { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 10px; }
-
-  .cover-meta-item .mi-icon { font-size: 14px; }
-  .cover-meta-item .mi-val { font-size: 9.5px; }
-
-  .map-chips { padding: 5px 8px; }
-  .chip { font-size: 8px; padding: 2px 7px; }
-  .map-card-head { padding: 5px 8px; }
-  .map-card-head .map-title { font-size: 9px; }
-  .nav-btn { font-size: 9px; padding: 3px 8px; }
-  .spacer { height: 0; }
-  .day-card { margin-bottom: 6px; border-radius: 8px; }
-  .cover-card { margin-bottom: 6px; border-radius: 8px; }
-  .map-card { margin: 0 10px; border-radius: 8px; }
-  .section { padding: 0 !important; }
-  .section:first-child, .section:last-child { padding-bottom: 0 !important; }
 }
 </style>
 </head>
 <body>
+<div class="app">
 
-<!-- =====================================================
-  STICKY NAV (mobile only, hidden at print)
-====================================================== -->
-<nav class="mobile-nav">
-  <div class="nav-logo">🌊 Noosa</div>
-  <div class="nav-tabs">
-    <div class="nav-tab active" onclick="scrollTo('sec-cover',this)">總覽</div>
-    <div class="nav-tab" onclick="scrollTo('sec-day1-map',this)">Day1 地圖</div>
-    <div class="nav-tab" onclick="scrollTo('sec-day1-tl',this)">Day1 行程</div>
-    <div class="nav-tab" onclick="scrollTo('sec-day2-map',this)">Day2 地圖</div>
-    <div class="nav-tab" onclick="scrollTo('sec-day2-tl',this)">Day2 行程</div>
+<!-- ══════════════════════════════
+     MAP PANEL
+══════════════════════════════ -->
+<div class="map-panel">
+
+  <!-- Day 1 Map -->
+  <div class="map-wrap active" id="map-day1">
+    <div class="map-chips-overlay">
+      <span class="chip d1">Carina</span><span class="chip-arrow">→</span>
+      <span class="chip d1">Glass House Mtns</span><span class="chip-arrow">→</span>
+      <span class="chip d1">The Lookout Cafe</span><span class="chip-arrow">→</span>
+      <span class="chip d1">Eumundi Markets</span><span class="chip-arrow">→</span>
+      <span class="chip d1">Noosa River Retreat</span>
+    </div>
+    <iframe
+      src="https://maps.google.com/maps?q=Glass+House+Mountains+Lookout+Queensland&output=embed&z=10"
+      loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Day1 Map">
+    </iframe>
+    <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&waypoints=Glass%20House%20Mountains%20Lookout%7CThe%20Lookout%20Cafe%20Glass%20House%20Mountains%7CEumundi%20Markets%7CMatso%27s%20Sunshine%20Coast%20Eumundi&travelmode=driving"
+       target="_blank" class="map-nav-float d1">🗺️ 開啟完整導航</a>
   </div>
-  <button class="print-btn" onclick="window.print()">🖨️ 列印</button>
-</nav>
 
-<!-- =====================================================
-  SECTION 1: 封面 / 總覽
-====================================================== -->
-<div class="section" id="sec-cover">
-  <div class="cover-card">
-    <div class="cover-hero">
-      <span class="emoji">🌊 🚗 🌿</span>
-      <h1>NOOSA 週末行程</h1>
-      <div class="sub">Glass House Mountains · Eumundi · Noosa · Mount Coolum</div>
-      <div class="date-badge">2026 年 7 月 4 日（六）～ 7 月 5 日（日）</div>
+  <!-- Day 2 Map -->
+  <div class="map-wrap" id="map-day2">
+    <div class="map-chips-overlay">
+      <span class="chip d2">Noosa River Retreat</span><span class="chip-arrow">→</span>
+      <span class="chip d2">Farmers Market</span><span class="chip-arrow">→</span>
+      <span class="chip d2">Mt Coolum</span><span class="chip-arrow">→</span>
+      <span class="chip d2">Viet Haus</span><span class="chip-arrow">→</span>
+      <span class="chip d2">Carina</span>
     </div>
-    <div class="cover-meta">
-      <div class="cover-meta-item">
-        <div class="mi-icon">🏨</div>
-        <div class="mi-label">住宿</div>
-        <div class="mi-val">Noosa River Retreat</div>
-      </div>
-      <div class="cover-meta-item">
-        <div class="mi-icon">🚗</div>
-        <div class="mi-label">交通</div>
-        <div class="mi-val">全程自駕</div>
-      </div>
-      <div class="cover-meta-item">
-        <div class="mi-icon">🥗</div>
-        <div class="mi-label">飲食</div>
-        <div class="mi-val">素食友好優先</div>
-      </div>
-    </div>
+    <iframe
+      src="https://maps.google.com/maps?q=Mount+Coolum+National+Park+Queensland&output=embed&z=10"
+      loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Day2 Map">
+    </iframe>
+    <a href="https://www.google.com/maps/dir/?api=1&origin=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&destination=Carina%20QLD&waypoints=Noosa%20Farmers%20Market%7CMount%20Coolum%20Walking%20Trail%7CViet%20Haus%20Ocean%20St%20Maroochydore&travelmode=driving"
+       target="_blank" class="map-nav-float d2">🗺️ 開啟完整導航</a>
+  </div>
 
-    <!-- 路線概覽 -->
-    <div class="ov-grid">
-      <!-- Day 1 -->
-      <div class="ov-col">
-        <div class="ov-day-label">📅 Day 1 · 07/04 (六)</div>
-        <div class="ov-stop">
-          <div class="ov-row"><div class="ov-dot-wrap"><div class="ov-dot" style="color:var(--blue)"></div><div class="ov-vline"></div></div><div><div class="ov-label">Carina 出發</div><div class="ov-time">06:30</div></div></div>
-          <div class="ov-row"><div class="ov-dot-wrap"><div class="ov-dot" style="color:var(--blue)"></div><div class="ov-vline"></div></div><div><div class="ov-label">Glass House Mountains Lookout</div><div class="ov-time">07:40–08:40</div></div></div>
-          <div class="ov-row"><div class="ov-dot-wrap"><div class="ov-dot" style="color:var(--blue)"></div><div class="ov-vline"></div></div><div><div class="ov-label">早餐 · The Lookout Cafe</div><div class="ov-time">08:55–09:50</div></div></div>
-          <div class="ov-row"><div class="ov-dot-wrap"><div class="ov-dot" style="color:var(--blue)"></div><div class="ov-vline"></div></div><div><div class="ov-label">Eumundi Markets + 午餐</div><div class="ov-time">10:50–13:30</div></div></div>
-          <div class="ov-row"><div class="ov-dot-wrap"><div class="ov-dot" style="color:var(--blue)"></div><div class="ov-vline"></div></div><div><div class="ov-label">Noosa River Retreat Check-in</div><div class="ov-time">14:15</div></div></div>
-          <div class="ov-row"><div class="ov-dot-wrap"><div class="ov-dot" style="color:var(--blue)"></div><div class="ov-vline"></div></div><div><div class="ov-label">Noosa National Park 步道</div><div class="ov-time">15:35–17:00</div></div></div>
-          <div class="ov-row"><div class="ov-dot-wrap"><div class="ov-dot" style="color:var(--blue)"></div></div><div><div class="ov-label">Massimo's Gelato + 晚餐</div><div class="ov-time">17:00–19:30</div></div></div>
-        </div>
-      </div>
-      <!-- Day 2 -->
-      <div class="ov-col">
-        <div class="ov-day-label">📅 Day 2 · 07/05 (日)</div>
-        <div class="ov-stop">
-          <div class="ov-row"><div class="ov-dot-wrap"><div class="ov-dot" style="color:var(--green)"></div><div class="ov-vline"></div></div><div><div class="ov-label">Noosa Farmers Market 早餐</div><div class="ov-time">07:00–08:10</div></div></div>
-          <div class="ov-row"><div class="ov-dot-wrap"><div class="ov-dot" style="color:var(--green)"></div><div class="ov-vline"></div></div><div><div class="ov-label">回飯店收拾行李</div><div class="ov-time">08:10–09:00</div></div></div>
-          <div class="ov-row"><div class="ov-dot-wrap"><div class="ov-dot" style="color:var(--green)"></div><div class="ov-vline"></div></div><div><div class="ov-label">Checkout 退房</div><div class="ov-time">09:00</div></div></div>
-          <div class="ov-row"><div class="ov-dot-wrap"><div class="ov-dot" style="color:var(--green)"></div><div class="ov-vline"></div></div><div><div class="ov-label">Mount Coolum Walking Trail</div><div class="ov-time">10:00–12:00</div></div></div>
-          <div class="ov-row"><div class="ov-dot-wrap"><div class="ov-dot" style="color:var(--green)"></div><div class="ov-vline"></div></div><div><div class="ov-label">午餐 · Sunshine Plaza</div><div class="ov-time">12:50–14:00</div></div></div>
-          <div class="ov-row"><div class="ov-dot-wrap"><div class="ov-dot" style="color:var(--green)"></div></div><div><div class="ov-label">Sunshine Plaza → Carina 返家</div><div class="ov-time">14:00–16:00</div></div></div>
-        </div>
-      </div>
-    </div><!-- /ov-grid -->
-  </div><!-- /cover-card -->
-</div>
+</div><!-- /map-panel -->
 
-<!-- =====================================================
-  SECTION 2: DAY 1 地圖
-====================================================== -->
-<div class="section" id="sec-day1-map">
-  <div class="day-card">
-    <div class="day-header">
-      <span class="day-badge badge-d1">DAY 1</span>
-      <div class="day-header-text">
-        <div class="day-title">Glass House Mountains → Eumundi → Noosa</div>
-        <div class="day-date">2026 年 7 月 4 日（六）</div>
-      </div>
+
+<!-- ══════════════════════════════
+     SIDEBAR / BOTTOM SHEET
+══════════════════════════════ -->
+<aside class="sidebar" id="sidebar">
+
+  <!-- ── STICKY TOP (always visible on mobile) ── -->
+  <div class="sidebar-sticky">
+
+    <!-- Drag handle (mobile) -->
+    <div class="sheet-handle" onclick="toggleSidebar()">
+      <div class="handle-bar"></div>
+      <span class="handle-hint" id="handleHint">▲ 查看行程</span>
     </div>
 
-    <div style="padding: 12px 14px 0;">
-      <div class="map-card">
-        <div class="map-card-head d1">
-          <span class="map-title">🗺️ Day 1 全程路線（Carina → Glass House → Eumundi → Noosa）</span>
-          <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&waypoints=Glass%20House%20Mountains%20Lookout%7CThe%20Lookout%20Cafe%20Glass%20House%20Mountains%7CEumundi%20Markets%7CMatso%27s%20Sunshine%20Coast%20Eumundi&travelmode=driving"
-             target="_blank" class="nav-btn d1">🗺️ 開啟導航</a>
-        </div>
-        <div class="map-frame">
-          <iframe src="https://maps.google.com/maps?q=Glass+House+Mountains+Lookout+Queensland&output=embed&z=10" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Day1 Map"></iframe>
-        </div>
-        <div class="map-chips">
-          <span class="chip d1">Carina</span><span class="chip-arrow">→</span>
-          <span class="chip d1">Glass House Mtns</span><span class="chip-arrow">→</span>
-          <span class="chip d1">The Lookout Cafe</span><span class="chip-arrow">→</span>
-          <span class="chip d1">Eumundi Markets</span><span class="chip-arrow">→</span>
-          <span class="chip d1">Noosa River Retreat</span>
+    <!-- Trip header -->
+    <div class="sidebar-header" onclick="toggleSidebar()">
+      <div class="sidebar-title-wrap">
+        <span class="s-emoji">🌊</span>
+        <div>
+          <div class="sidebar-name">NOOSA 週末行程</div>
+          <div class="sidebar-sub">2026/07/04–05 · 全程自駕 · 素食友好</div>
         </div>
       </div>
+      <button class="print-btn" onclick="event.stopPropagation(); window.print()">🖨️ 列印</button>
     </div>
 
-    <!-- DAY 1 TIMELINE -->
-    <div id="sec-day1-tl" style="scroll-margin-top: 56px;">
-    <div class="timeline">
-
-      <div class="tl-item">
-        <div class="tl-time">06:30<br>07:40</div>
-        <div class="tl-axis"><div class="tl-dot dot-blue"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🚗 Carina 出發 → Glass House Mountains Lookout</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Glass%20House%20Mountains%20Lookout&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
-          </div>
-          <div class="tl-tags"><span class="tag tag-drive">開車 約 70 分鐘</span></div>
-          <div class="tl-note">早出發停車和拍照更舒適。</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-time">07:40<br>08:40</div>
-        <div class="tl-axis"><div class="tl-dot dot-green"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🏔️ Glass House Mountains Lookout（1 小時）</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/search/?api=1&query=Glass%20House%20Mountains%20Lookout" target="_blank" class="tl-link d1">📍 地圖</a>
-          </div>
-          <div class="tl-tags"><span class="tag tag-hike">步道 800m · Grade 3</span><span class="tag tag-hike">Out-and-back</span><span class="tag tag-hike">24 小時開放</span></div>
-          <div class="tl-note">觀景台短步道，不是正式爬山，適合輕裝前往。</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-time">08:40<br>08:55</div>
-        <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🚗 前往早餐地點</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/dir/?api=1&origin=Glass%20House%20Mountains%20Lookout&destination=The%20Lookout%20Cafe%20Glass%20House%20Mountains&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
-          </div>
-          <div class="tl-tags"><span class="tag tag-drive">短程移動</span></div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-time">08:55<br>09:50</div>
-        <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">☕ 早餐：The Lookout Cafe</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/search/?api=1&query=The%20Lookout%20Cafe%20Glass%20House%20Mountains" target="_blank" class="tl-link d1">📍 The Lookout Cafe</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=The%20Coffee%20Club%20Cafe%20Beerwah" target="_blank" class="tl-link d1">📍 備案：Coffee Club</a>
-          </div>
-          <div class="tl-tags"><span class="tag tag-food">早餐 AUD 20–30/人</span><span class="tag tag-food">素食 OK</span></div>
-          <div class="tl-note">首選 The Lookout Cafe，營業 08:30–14:30，有 vegetarian/vegan options。</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-time">09:50<br>10:50</div>
-        <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🚗 前往 Eumundi</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/dir/?api=1&origin=The%20Lookout%20Cafe%20Glass%20House%20Mountains&destination=Eumundi%20Markets&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
-          </div>
-          <div class="tl-tags"><span class="tag tag-drive">開車 約 40 分鐘</span></div>
-          <div class="tl-note">週六 + school holiday，停車時間保守估計。</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-time">10:50<br>13:30</div>
-        <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🛍️ Eumundi Markets + 午餐</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/search/?api=1&query=Eumundi%20Markets" target="_blank" class="tl-link d1">📍 Eumundi Markets</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Matso%27s%20Sunshine%20Coast%20Eumundi" target="_blank" class="tl-link d1">📍 Matso's（備案）</a>
-          </div>
-          <div class="tl-tags"><span class="tag tag-shop">市集 07:30–14:00</span><span class="tag tag-food">午餐 AUD 15–25/人</span></div>
-          <div class="tl-note">市集小吃最容易控制預算且素食選擇多。備案坐下休息：Matso's（AUD 30–40）。<br><strong>建議 13:30 前離開</strong>，不要等到市場 14:00 關門。</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-time">13:30<br>14:15</div>
-        <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🚗 Eumundi → Noosa River Retreat</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/dir/?api=1&origin=Eumundi%20Markets&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
-          </div>
-          <div class="tl-tags"><span class="tag tag-drive">開車 約 30 分鐘</span></div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-time">14:15<br>15:15</div>
-        <div class="tl-axis"><div class="tl-dot dot-purple"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🏨 Check-in · Noosa River Retreat + 休息</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/search/?api=1&query=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville" target="_blank" class="tl-link d1">📍 地圖</a>
-          </div>
-          <div class="tl-tags"><span class="tag tag-rest">Check-in from 2pm</span></div>
-          <div class="tl-note">放行李、稍作休息，準備下午健行。</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-time">15:15<br>15:35</div>
-        <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🚗 前往 Noosa National Park Carpark</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/dir/?api=1&origin=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&destination=Noosa%20National%20Park%20Carpark&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
-          </div>
-          <div class="tl-note">週末 carpark 可能滿，備案停 Hastings Street 附近。</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-time">15:35<br>17:00</div>
-        <div class="tl-axis"><div class="tl-dot dot-green"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🌿 Noosa National Park：Tea Tree Bay → Dolphin Point</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/search/?api=1&query=Noosa%20National%20Park%20Carpark" target="_blank" class="tl-link d1">📍 Carpark</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Tea%20Tree%20Bay%20Beach%20Noosa" target="_blank" class="tl-link d1">📍 Tea Tree Bay</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Dolphin%20Point%20Lookout%20Noosa" target="_blank" class="tl-link d1">📍 Dolphin Point</a>
-          </div>
-          <div class="tl-tags"><span class="tag tag-hike">Out-and-back（非 Loop）</span><span class="tag tag-hike">1.2km 單程</span><span class="tag tag-hike">約 75–100 分鐘</span></div>
-          <div class="tl-note">沿海步道，有機會看到海豚。</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-time">17:00<br>17:30</div>
-        <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🍦 Massimo's Gelateria</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/search/?api=1&query=Massimo%27s%20Gelateria%20Noosa" target="_blank" class="tl-link d1">📍 地圖</a>
-          </div>
-          <div class="tl-tags"><span class="tag tag-food">週六開到 21:30</span></div>
-          <div class="tl-note">走完步道後的完美甜點。</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-time">18:00<br>19:30</div>
-        <div class="tl-axis"><div class="tl-dot dot-orange"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🍽️ 晚餐（三選一）</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/search/?api=1&query=Leela%20Noosa" target="_blank" class="tl-link d1">📍 Leela Noosa</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Raw%20and%20Rice%20Noosa" target="_blank" class="tl-link d1">📍 Raw + Rice</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Somedays%20Pizza%20Noosa" target="_blank" class="tl-link d1">📍 Somedays Pizza</a>
-          </div>
-          <div class="tl-note">控預算首推 <strong>Leela Noosa</strong> 或 <strong>Raw + Rice</strong>。Somedays Pizza 氣氛好但較貴。</div>
-        </div>
-      </div>
-
-    </div><!-- /timeline -->
+    <!-- Day tabs -->
+    <div class="day-tabs">
+      <button class="day-tab active" onclick="switchDay(1, this)">
+        <span class="tab-label">Day 1</span>
+        <span class="tab-sub">07/04 (六) 玻璃屋→努薩</span>
+      </button>
+      <button class="day-tab" onclick="switchDay(2, this)">
+        <span class="tab-label">Day 2</span>
+        <span class="tab-sub">07/05 (日) Coolum→返家</span>
+      </button>
     </div>
+  </div><!-- /sidebar-sticky -->
 
-    <!-- Day 1 餐廳 -->
-    <div class="section-label">🍽️ Day 1 餐廳與素食預算</div>
-    <div class="food-cards">
-      <div class="food-row"><div class="fr-type">早餐</div><div class="fr-info"><div class="fr-name">The Lookout Cafe</div><div class="fr-veg">Veg / Vegan OK</div></div><div class="fr-budget">AUD 20–30</div></div>
-      <div class="food-row"><div class="fr-type">早餐備案</div><div class="fr-info"><div class="fr-name">The Coffee Club - Beerwah</div><div class="fr-veg">部分 Vegan 可調</div></div><div class="fr-budget">AUD 20–30</div></div>
-      <div class="food-row"><div class="fr-type">午餐</div><div class="fr-info"><div class="fr-name">Eumundi Markets 小吃</div><div class="fr-veg">素食容易找</div></div><div class="fr-budget">AUD 15–25</div></div>
-      <div class="food-row"><div class="fr-type">午餐備案</div><div class="fr-info"><div class="fr-name">Matso's Sunshine Coast</div><div class="fr-veg">Veg / Vegan 友好</div></div><div class="fr-budget">AUD 25–40</div></div>
-      <div class="food-row"><div class="fr-type">晚餐首選</div><div class="fr-info"><div class="fr-name">Leela Noosa</div><div class="fr-veg">素食咖哩選擇多</div></div><div class="fr-budget">AUD 20–30</div></div>
-      <div class="food-row"><div class="fr-type">晚餐輕食</div><div class="fr-info"><div class="fr-name">Raw + Rice Noosa</div><div class="fr-veg">Tofu / Vegan OK</div></div><div class="fr-budget">AUD 17–25</div></div>
-      <div class="food-row"><div class="fr-type">晚餐氣氛</div><div class="fr-info"><div class="fr-name">Somedays Pizza Noosa</div><div class="fr-veg">Veg / Vegan 選項</div></div><div class="fr-budget">AUD 30–40</div></div>
-    </div>
+  <!-- ── SCROLLABLE BODY ── -->
+  <div class="sidebar-body">
 
-  </div><!-- /day-card -->
-</div>
+    <!-- ─── DAY 1 CONTENT ─── -->
+    <div class="day-content active" id="day1-content">
 
-<!-- =====================================================
-  SECTION 3: DAY 2 地圖 + 行程
-====================================================== -->
-<div class="section" id="sec-day2-map">
-  <div class="day-card">
-    <div class="day-header">
-      <span class="day-badge badge-d2">DAY 2</span>
-      <div class="day-header-text">
-        <div class="day-title">Noosa → Mt Coolum → Sunshine Plaza → Carina</div>
-        <div class="day-date">2026 年 7 月 5 日（日）</div>
+      <div class="route-strip d1">
+        <span class="route-strip-label">🗺️ Glass House Mtns → Eumundi → Noosa River Retreat</span>
+        <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&waypoints=Glass%20House%20Mountains%20Lookout%7CThe%20Lookout%20Cafe%20Glass%20House%20Mountains%7CEumundi%20Markets%7CMatso%27s%20Sunshine%20Coast%20Eumundi&travelmode=driving"
+           target="_blank" class="nav-btn d1">導航</a>
       </div>
-    </div>
 
-    <div style="padding: 12px 14px 0;">
-      <div class="map-card">
-        <div class="map-card-head d2">
-          <span class="map-title">🗺️ Day 2 全程路線（Noosa → Farmers Mkt → Mt Coolum → Sunshine Plaza → Carina）</span>
-          <a href="https://www.google.com/maps/dir/?api=1&origin=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&destination=Carina%20QLD&waypoints=Noosa%20Farmers%20Market%7CMount%20Coolum%20Walking%20Trail%7CSunshine%20Plaza%20Maroochydore&travelmode=driving"
-             target="_blank" class="nav-btn d2">🗺️ 開啟導航</a>
-        </div>
-        <div class="map-frame">
-          <iframe src="https://maps.google.com/maps?q=Mount+Coolum+National+Park+Queensland&output=embed&z=10" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Day2 Map"></iframe>
-        </div>
-        <div class="map-chips">
-          <span class="chip d2">Noosa River Retreat</span><span class="chip-arrow">→</span>
-          <span class="chip d2">Farmers Market</span><span class="chip-arrow">→</span>
-          <span class="chip d2">Mt Coolum</span><span class="chip-arrow">→</span>
-          <span class="chip d2">Sunshine Plaza</span><span class="chip-arrow">→</span>
-          <span class="chip d2">Carina</span>
-        </div>
-      </div>
-    </div>
+      <div class="timeline">
 
-    <!-- DAY 2 TIMELINE -->
-    <div id="sec-day2-tl" style="scroll-margin-top: 56px;">
-    <div class="timeline">
-
-      <div class="tl-item">
-        <div class="tl-time">07:00<br>08:10</div>
-        <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🥦 早餐：Noosa Farmers Market</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/search/?api=1&query=Noosa%20Farmers%20Market" target="_blank" class="tl-link d2">📍 地圖</a>
+        <div class="tl-item">
+          <div class="tl-time">06:30<br>07:40</div>
+          <div class="tl-axis"><div class="tl-dot dot-blue"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🚗 Carina 出發 → Glass House Mountains Lookout</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Glass%20House%20Mountains%20Lookout&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-drive">開車 約 70 分鐘</span></div>
+            <div class="tl-note">早出發停車和拍照更舒適。</div>
           </div>
-          <div class="tl-tags"><span class="tag tag-food">市集早餐 AUD 10–25/人</span><span class="tag tag-shop">週日 07:00–12:00</span></div>
-          <div class="tl-note">水果、麵包、咖啡、蔬食攤位，素食選項容易找。</div>
         </div>
-      </div>
 
-      <div class="tl-item">
-        <div class="tl-time">08:10<br>08:25</div>
-        <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🚗 回飯店</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/dir/?api=1&origin=Noosa%20Farmers%20Market&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&travelmode=driving" target="_blank" class="tl-link d2">📍 導航</a>
+        <div class="tl-item">
+          <div class="tl-time">07:40<br>08:40</div>
+          <div class="tl-axis"><div class="tl-dot dot-green"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🏔️ Glass House Mountains Lookout（1 小時）</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/search/?api=1&query=Glass%20House%20Mountains%20Lookout" target="_blank" class="tl-link d1">📍 地圖</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-hike">步道 800m · Grade 3</span><span class="tag tag-hike">Out-and-back</span><span class="tag tag-hike">24 小時開放</span></div>
+            <div class="tl-note">觀景台短步道，不是正式爬山，適合輕裝前往。</div>
           </div>
-          <div class="tl-note">不要在市場逛太久，後面要爬 Mount Coolum。</div>
         </div>
-      </div>
 
-      <div class="tl-item">
-        <div class="tl-time">08:25<br>09:00</div>
-        <div class="tl-axis"><div class="tl-dot dot-purple"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🧳 收拾行李</div>
-          <div class="tl-tags"><span class="tag tag-warn">⚠️ 重要！不可壓縮</span></div>
-          <div class="tl-note">留足夠時間整理，避免倉皇退房。</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-time">09:00</div>
-        <div class="tl-axis"><div class="tl-dot dot-purple"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🏨 Checkout · Noosa River Retreat</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/search/?api=1&query=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville" target="_blank" class="tl-link d2">📍 地圖</a>
+        <div class="tl-item">
+          <div class="tl-time">08:40<br>08:55</div>
+          <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🚗 前往早餐地點</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Glass%20House%20Mountains%20Lookout&destination=The%20Lookout%20Cafe%20Glass%20House%20Mountains&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-drive">短程移動</span></div>
           </div>
-          <div class="tl-tags"><span class="tag tag-rest">官方 Check-out 10am 前</span></div>
-          <div class="tl-note">09:00 退房非常安全，行程不趕。</div>
         </div>
-      </div>
 
-      <div class="tl-item">
-        <div class="tl-time">09:00<br>09:40</div>
-        <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🚗 前往 Mount Coolum Walking Trail</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/dir/?api=1&origin=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&destination=Mount%20Coolum%20Walking%20Trail&travelmode=driving" target="_blank" class="tl-link d2">📍 導航</a>
+        <div class="tl-item">
+          <div class="tl-time">08:55<br>09:50</div>
+          <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">☕ 早餐：The Lookout Cafe</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/search/?api=1&query=The%20Lookout%20Cafe%20Glass%20House%20Mountains" target="_blank" class="tl-link d1">📍 The Lookout Cafe</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=The%20Coffee%20Club%20Cafe%20Beerwah" target="_blank" class="tl-link d1">📍 備案：Coffee Club</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-food">早餐 AUD 20–30/人</span><span class="tag tag-food">素食 OK</span></div>
+            <div class="tl-note">首選 The Lookout Cafe，營業 08:30–14:30，有 vegetarian/vegan options。</div>
           </div>
-          <div class="tl-tags"><span class="tag tag-drive">開車 約 30 分鐘</span></div>
         </div>
-      </div>
 
-      <div class="tl-item">
-        <div class="tl-time">09:40<br>10:00</div>
-        <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🅿️ 停車、整理、暖身</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/search/?api=1&query=Mount%20Coolum%20Walking%20Trail" target="_blank" class="tl-link d2">📍 地圖</a>
+        <div class="tl-item">
+          <div class="tl-time">09:50<br>10:50</div>
+          <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🚗 前往 Eumundi</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/dir/?api=1&origin=The%20Lookout%20Cafe%20Glass%20House%20Mountains&destination=Eumundi%20Markets&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-drive">開車 約 40 分鐘</span></div>
+            <div class="tl-note">週六 + school holiday，停車時間保守估計。</div>
           </div>
-          <div class="tl-note">停車可能熱門，保留 20 分鐘。上廁所、整理水和外套。</div>
         </div>
-      </div>
 
-      <div class="tl-item">
-        <div class="tl-time">10:00<br>12:00</div>
-        <div class="tl-axis"><div class="tl-dot dot-green"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">⛰️ Mount Coolum Walking Trail（登頂）</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/search/?api=1&query=Mount%20Coolum%20Walking%20Trail" target="_blank" class="tl-link d2">📍 地圖</a>
+        <div class="tl-item">
+          <div class="tl-time">10:50<br>13:30</div>
+          <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🛍️ Eumundi Markets + 午餐</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/search/?api=1&query=Eumundi%20Markets" target="_blank" class="tl-link d1">📍 Eumundi Markets</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Matso%27s%20Sunshine%20Coast%20Eumundi" target="_blank" class="tl-link d1">📍 Matso's（備案）</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-shop">市集 07:30–14:00</span><span class="tag tag-food">午餐 AUD 15–25/人</span></div>
+            <div class="tl-note">市集小吃最容易控制預算且素食選擇多。備案坐下休息：Matso's（AUD 30–40）。<br><strong>建議 13:30 前離開</strong>，不要等到市場 14:00 關門。</div>
           </div>
-          <div class="tl-tags"><span class="tag tag-hike">Grade 4</span><span class="tag tag-hike">Steep / Rocky</span><span class="tag tag-hike">約 2 小時 return</span></div>
-          <div class="tl-note">官方 Grade 4，有陡峭岩石路段。<strong>攜帶充足水分</strong>，穿防滑登山鞋。</div>
         </div>
-      </div>
 
-      <div class="tl-item">
-        <div class="tl-time">12:00<br>12:20</div>
-        <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🧘 下山休息、補水、換衣服</div>
-          <div class="tl-tags"><span class="tag tag-warn">⚠️ 必留緩衝時間</span></div>
-          <div class="tl-note">這段一定要留，不然去午餐會很狼狽。</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-time">12:20<br>12:50</div>
-        <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🚗 Mount Coolum → Sunshine Plaza</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/dir/?api=1&origin=Mount%20Coolum%20Walking%20Trail&destination=Sunshine%20Plaza%20Maroochydore&travelmode=driving" target="_blank" class="tl-link d2">📍 導航</a>
+        <div class="tl-item">
+          <div class="tl-time">13:30<br>14:15</div>
+          <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🚗 Eumundi → Noosa River Retreat</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Eumundi%20Markets&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-drive">開車 約 30 分鐘</span></div>
           </div>
-          <div class="tl-tags"><span class="tag tag-drive">開車 約 20 分鐘</span></div>
         </div>
-      </div>
 
-      <div class="tl-item">
-        <div class="tl-time">12:50<br>14:00</div>
-        <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🍱 午餐：Sunshine Plaza</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/search/?api=1&query=Grill%27d%20Sunshine%20Plaza" target="_blank" class="tl-link d2">📍 Grill'd</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Wara%20Sushi%20Sunshine%20Plaza" target="_blank" class="tl-link d2">📍 Wara Sushi</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Little%20Red%20Dumpling%20Sunshine%20Plaza" target="_blank" class="tl-link d2">📍 Little Red</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Sunshine%20Plaza%20Maroochydore" target="_blank" class="tl-link d2">📍 Food Court</a>
+        <div class="tl-item">
+          <div class="tl-time">14:15<br>15:15</div>
+          <div class="tl-axis"><div class="tl-dot dot-purple"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🏨 Check-in · Noosa River Retreat + 休息</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/search/?api=1&query=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville" target="_blank" class="tl-link d1">📍 地圖</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-rest">Check-in from 2pm</span></div>
+            <div class="tl-note">放行李、稍作休息，準備下午健行。</div>
           </div>
-          <div class="tl-tags"><span class="tag tag-food">午餐 AUD 15–30/人</span></div>
-          <div class="tl-note">推薦 Grill'd、Wara Sushi、Little Red Dumpling 或 food court，選擇多。</div>
         </div>
-      </div>
 
-      <div class="tl-item">
-        <div class="tl-time">14:00<br>16:00</div>
-        <div class="tl-axis"><div class="tl-dot dot-blue"></div></div>
-        <div class="tl-body">
-          <div class="tl-main">🏠 Sunshine Plaza → Carina 返家</div>
-          <div class="tl-links">
-            <a href="https://www.google.com/maps/dir/?api=1&origin=Sunshine%20Plaza%20Maroochydore&destination=Carina%20QLD&travelmode=driving" target="_blank" class="tl-link d2">📍 導航</a>
+        <div class="tl-item">
+          <div class="tl-time">15:15<br>15:35</div>
+          <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🚗 前往 Noosa National Park Carpark</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&destination=Noosa%20National%20Park%20Carpark&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
+            </div>
+            <div class="tl-note">週末 carpark 可能滿，備案停 Hastings Street 附近。</div>
           </div>
-          <div class="tl-tags"><span class="tag tag-drive">約 1.5–2 小時</span></div>
-          <div class="tl-note">週日下午回布里斯本車流較多，保守估計 2 小時。</div>
         </div>
+
+        <div class="tl-item">
+          <div class="tl-time">15:35<br>17:00</div>
+          <div class="tl-axis"><div class="tl-dot dot-green"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🌿 Noosa National Park：Tea Tree Bay → Dolphin Point</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/search/?api=1&query=Noosa%20National%20Park%20Carpark" target="_blank" class="tl-link d1">📍 Carpark</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Tea%20Tree%20Bay%20Beach%20Noosa" target="_blank" class="tl-link d1">📍 Tea Tree Bay</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Dolphin%20Point%20Lookout%20Noosa" target="_blank" class="tl-link d1">📍 Dolphin Point</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-hike">Out-and-back（非 Loop）</span><span class="tag tag-hike">1.2km 單程</span><span class="tag tag-hike">約 75–100 分鐘</span></div>
+            <div class="tl-note">沿海步道，有機會看到海豚。</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-time">17:00<br>17:30</div>
+          <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🍦 Massimo's Gelateria</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/search/?api=1&query=Massimo%27s%20Gelateria%20Noosa" target="_blank" class="tl-link d1">📍 地圖</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-food">週六開到 21:30</span></div>
+            <div class="tl-note">走完步道後的完美甜點。</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-time">18:00<br>19:30</div>
+          <div class="tl-axis"><div class="tl-dot dot-orange"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🍽️ 晚餐（三選一）</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/search/?api=1&query=Leela%20Noosa" target="_blank" class="tl-link d1">📍 Leela Noosa</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Raw%20and%20Rice%20Noosa" target="_blank" class="tl-link d1">📍 Raw + Rice</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Somedays%20Pizza%20Noosa" target="_blank" class="tl-link d1">📍 Somedays Pizza</a>
+            </div>
+            <div class="tl-note">控預算首推 <strong>Leela Noosa</strong> 或 <strong>Raw + Rice</strong>。Somedays Pizza 氣氛好但較貴。</div>
+          </div>
+        </div>
+
+      </div><!-- /timeline -->
+
+      <div class="section-label">🍽️ Day 1 餐廳與素食預算</div>
+      <div class="food-cards">
+        <div class="food-row"><div class="fr-type">早餐</div><div class="fr-info"><div class="fr-name">The Lookout Cafe</div><div class="fr-veg">Veg / Vegan OK</div></div><div class="fr-budget">AUD 20–30</div></div>
+        <div class="food-row"><div class="fr-type">早餐備案</div><div class="fr-info"><div class="fr-name">The Coffee Club - Beerwah</div><div class="fr-veg">部分 Vegan 可調</div></div><div class="fr-budget">AUD 20–30</div></div>
+        <div class="food-row"><div class="fr-type">午餐</div><div class="fr-info"><div class="fr-name">Eumundi Markets 小吃</div><div class="fr-veg">素食容易找</div></div><div class="fr-budget">AUD 15–25</div></div>
+        <div class="food-row"><div class="fr-type">午餐備案</div><div class="fr-info"><div class="fr-name">Matso's Sunshine Coast</div><div class="fr-veg">Veg / Vegan 友好</div></div><div class="fr-budget">AUD 25–40</div></div>
+        <div class="food-row"><div class="fr-type">晚餐首選</div><div class="fr-info"><div class="fr-name">Leela Noosa</div><div class="fr-veg">素食咖哩選擇多</div></div><div class="fr-budget">AUD 20–30</div></div>
+        <div class="food-row"><div class="fr-type">晚餐輕食</div><div class="fr-info"><div class="fr-name">Raw + Rice Noosa</div><div class="fr-veg">Tofu / Vegan OK</div></div><div class="fr-budget">AUD 17–25</div></div>
+        <div class="food-row"><div class="fr-type">晚餐氣氛</div><div class="fr-info"><div class="fr-name">Somedays Pizza Noosa</div><div class="fr-veg">Veg / Vegan 選項</div></div><div class="fr-budget">AUD 30–40</div></div>
       </div>
 
-    </div><!-- /timeline -->
-    </div>
+    </div><!-- /day1-content -->
 
-    <!-- Day 2 餐廳 -->
-    <div class="section-label">🍽️ Day 2 餐廳與素食預算</div>
-    <div class="food-cards">
-      <div class="food-row"><div class="fr-type">早餐</div><div class="fr-info"><div class="fr-name">Noosa Farmers Market</div><div class="fr-veg">蔬食攤位多</div></div><div class="fr-budget">AUD 10–25</div></div>
-      <div class="food-row"><div class="fr-type">午餐首選</div><div class="fr-info"><div class="fr-name">Grill'd Sunshine Plaza</div><div class="fr-veg">Plant-based 系列</div></div><div class="fr-budget">AUD 20–30</div></div>
-      <div class="food-row"><div class="fr-type">午餐備案</div><div class="fr-info"><div class="fr-name">Wara Sushi Sunshine Plaza</div><div class="fr-veg">蔬菜壽司、豆腐</div></div><div class="fr-budget">AUD 15–30</div></div>
-      <div class="food-row"><div class="fr-type">午餐備案</div><div class="fr-info"><div class="fr-name">Little Red Dumpling</div><div class="fr-veg">蔬食類可選</div></div><div class="fr-budget">AUD 20–30</div></div>
-      <div class="food-row"><div class="fr-type">最省事</div><div class="fr-info"><div class="fr-name">Sunshine Plaza Food Court</div><div class="fr-veg">選擇最多最好分流</div></div><div class="fr-budget">AUD 15–25</div></div>
-    </div>
 
-    <!-- 重要提醒 -->
-    <div class="tips-box">
-      <div class="tips-title">⚠️ 重要提醒</div>
-      <ul class="tips-list">
-        <li>Noosa NP Carpark 週末可能滿，備案停 Hastings Street 附近</li>
-        <li>Mount Coolum Grade 4，帶足夠水分和防滑登山鞋</li>
-        <li>Eumundi 週六 + 學校假期，停車預留多一點時間</li>
-        <li>週日下午回布里斯本，抓 2 小時車程比較穩</li>
-        <li>Noosa Farmers Market 週日 07:00–12:00，不要誤點</li>
-        <li>收行李時間 08:25–09:00 不可壓縮，非常重要</li>
-      </ul>
-    </div>
+    <!-- ─── DAY 2 CONTENT ─── -->
+    <div class="day-content" id="day2-content">
 
-  </div><!-- /day-card -->
-</div>
+      <div class="route-strip d2">
+        <span class="route-strip-label">🗺️ Farmers Mkt → Mt Coolum → Viet Haus → Carina</span>
+        <a href="https://www.google.com/maps/dir/?api=1&origin=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&destination=Carina%20QLD&waypoints=Noosa%20Farmers%20Market%7CMount%20Coolum%20Walking%20Trail%7CViet%20Haus%20Ocean%20St%20Maroochydore&travelmode=driving"
+           target="_blank" class="nav-btn d2">導航</a>
+      </div>
 
-<div class="spacer"></div>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-time">07:00<br>08:10</div>
+          <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🥦 早餐：Noosa Farmers Market</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/search/?api=1&query=Noosa%20Farmers%20Market" target="_blank" class="tl-link d2">📍 地圖</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-food">市集早餐 AUD 10–25/人</span><span class="tag tag-shop">週日 07:00–12:00</span></div>
+            <div class="tl-note">水果、麵包、咖啡、蔬食攤位，素食選項容易找。</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-time">08:10<br>08:25</div>
+          <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🚗 回飯店</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Noosa%20Farmers%20Market&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&travelmode=driving" target="_blank" class="tl-link d2">📍 導航</a>
+            </div>
+            <div class="tl-note">不要在市場逛太久，後面要爬 Mount Coolum。</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-time">08:25<br>09:00</div>
+          <div class="tl-axis"><div class="tl-dot dot-purple"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🧳 收拾行李</div>
+            <div class="tl-tags"><span class="tag tag-warn">⚠️ 重要！不可壓縮</span></div>
+            <div class="tl-note">留足夠時間整理，避免倉皇退房。</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-time">09:00</div>
+          <div class="tl-axis"><div class="tl-dot dot-purple"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🏨 Checkout · Noosa River Retreat</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/search/?api=1&query=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville" target="_blank" class="tl-link d2">📍 地圖</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-rest">官方 Check-out 10am 前</span></div>
+            <div class="tl-note">09:00 退房非常安全，行程不趕。</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-time">09:00<br>09:40</div>
+          <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🚗 前往 Mount Coolum Walking Trail</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&destination=Mount%20Coolum%20Walking%20Trail&travelmode=driving" target="_blank" class="tl-link d2">📍 導航</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-drive">開車 約 30 分鐘</span></div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-time">09:40<br>10:00</div>
+          <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🅿️ 停車、整理、暖身</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/search/?api=1&query=Mount%20Coolum%20Walking%20Trail" target="_blank" class="tl-link d2">📍 地圖</a>
+            </div>
+            <div class="tl-note">停車可能熱門，保留 20 分鐘。上廁所、整理水和外套。</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-time">10:00<br>12:00</div>
+          <div class="tl-axis"><div class="tl-dot dot-green"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">⛰️ Mount Coolum Walking Trail（登頂）</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/search/?api=1&query=Mount%20Coolum%20Walking%20Trail" target="_blank" class="tl-link d2">📍 地圖</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-hike">Grade 4</span><span class="tag tag-hike">Steep / Rocky</span><span class="tag tag-hike">約 2 小時 return</span></div>
+            <div class="tl-note">官方 Grade 4，有陡峭岩石路段。<strong>攜帶充足水分</strong>，穿防滑登山鞋。</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-time">12:00<br>12:20</div>
+          <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🧘 下山休息、補水、換衣服</div>
+            <div class="tl-tags"><span class="tag tag-warn">⚠️ 必留緩衝時間</span></div>
+            <div class="tl-note">這段一定要留，不然去午餐會很狼狽。</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-time">12:20<br>12:50</div>
+          <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🚗 Mount Coolum → Viet Haus（Maroochydore）</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Mount%20Coolum%20Walking%20Trail&destination=Viet%20Haus%20Ocean%20St%20Maroochydore&travelmode=driving" target="_blank" class="tl-link d2">📍 導航</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-drive">開車 約 20 分鐘</span></div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-time">12:50<br>14:00</div>
+          <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🍜 午餐：Viet Haus</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/search/?api=1&query=Viet%20Haus%20Ocean%20St%20Maroochydore" target="_blank" class="tl-link d2">📍 Viet Haus 地圖</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-food">越南料理</span><span class="tag tag-food">Shop 9 / 12-20 Ocean St</span></div>
+            <div class="tl-note">越南河粉、春卷，有素食選項可詢問。爬完山後吃熱湯麵非常舒服。</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-time">14:00<br>16:00</div>
+          <div class="tl-axis"><div class="tl-dot dot-blue"></div></div>
+          <div class="tl-body">
+            <div class="tl-main">🏠 Sunshine Plaza → Carina 返家</div>
+            <div class="tl-links">
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Viet%20Haus%20Ocean%20St%20Maroochydore&destination=Carina%20QLD&travelmode=driving" target="_blank" class="tl-link d2">📍 導航</a>
+            </div>
+            <div class="tl-tags"><span class="tag tag-drive">約 1.5–2 小時</span></div>
+            <div class="tl-note">週日下午回布里斯本車流較多，保守估計 2 小時。</div>
+          </div>
+        </div>
+
+      </div><!-- /timeline -->
+
+      <div class="section-label">🍽️ Day 2 餐廳與素食預算</div>
+      <div class="food-cards">
+        <div class="food-row"><div class="fr-type">早餐</div><div class="fr-info"><div class="fr-name">Noosa Farmers Market</div><div class="fr-veg">蔬食攤位多</div></div><div class="fr-budget">AUD 10–25</div></div>
+        <div class="food-row"><div class="fr-type">午餐</div><div class="fr-info"><div class="fr-name">Viet Haus — Shop 9/12-20 Ocean St, Maroochydore</div><div class="fr-veg">越南料理・素食選項可詢問</div></div><div class="fr-budget">AUD 15–25</div></div>
+      </div>
+
+      <div class="tips-box">
+        <div class="tips-title">⚠️ 重要提醒</div>
+        <ul class="tips-list">
+          <li>Noosa NP Carpark 週末可能滿，備案停 Hastings Street 附近</li>
+          <li>Mount Coolum Grade 4，帶足夠水分和防滑登山鞋</li>
+          <li>Eumundi 週六 + 學校假期，停車預留多一點時間</li>
+          <li>週日下午回布里斯本，抓 2 小時車程比較穩</li>
+          <li>Noosa Farmers Market 週日 07:00–12:00，不要誤點</li>
+          <li>收行李時間 08:25–09:00 不可壓縮，非常重要</li>
+        </ul>
+      </div>
+
+    </div><!-- /day2-content -->
+
+  </div><!-- /sidebar-body -->
+</aside><!-- /sidebar -->
+
+</div><!-- /app -->
+
+<!-- Mobile map-updated hint -->
+<div id="mapToast" class="map-toast">↓ 地圖已更新，收起行程可查看</div>
 
 <script>
-  // Smooth scroll + active tab
-  function scrollTo(id, el) {
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
+  var sidebar = document.getElementById('sidebar');
+  var handleHint = document.getElementById('handleHint');
+
+  function toggleSidebar() {
+    if (window.innerWidth >= 768) return;
+    var expanded = sidebar.classList.toggle('expanded');
+    handleHint.textContent = expanded ? '▼ 收起' : '▲ 查看行程';
   }
 
-  // Update active tab on scroll
-  const sections = [
-    { id: 'sec-cover',    tab: 0 },
-    { id: 'sec-day1-map', tab: 1 },
-    { id: 'sec-day1-tl',  tab: 2 },
-    { id: 'sec-day2-map', tab: 3 },
-    { id: 'sec-day2-tl',  tab: 4 },
-  ];
-  const tabs = document.querySelectorAll('.nav-tab');
+  function switchDay(day, tabEl) {
+    currentDay = day;
+    // Update tabs
+    document.querySelectorAll('.day-tab').forEach(function(t) { t.classList.remove('active'); });
+    tabEl.classList.add('active');
 
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const sec = sections.find(s => s.id === entry.target.id);
-        if (sec) {
-          tabs.forEach(t => t.classList.remove('active'));
-          tabs[sec.tab].classList.add('active');
-          // scroll tab into view
-          tabs[sec.tab].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
-      }
-    });
-  }, { rootMargin: '-40% 0px -55% 0px' });
+    // Update content panels
+    document.querySelectorAll('.day-content').forEach(function(c) { c.classList.remove('active'); });
+    document.getElementById('day' + day + '-content').classList.add('active');
 
-  sections.forEach(s => {
-    const el = document.getElementById(s.id);
-    if (el) obs.observe(el);
+    // Update maps
+    document.querySelectorAll('.map-wrap').forEach(function(m) { m.classList.remove('active'); });
+    document.getElementById('map-day' + day).classList.add('active');
+
+    // Mobile: expand sidebar and scroll to top
+    if (window.innerWidth < 768) {
+      sidebar.classList.add('expanded');
+      handleHint.textContent = '▼ 收起';
+      document.querySelector('.sidebar-body').scrollTop = 0;
+    }
+  }
+
+  // Desktop: clicking sidebar header does nothing special
+  // Mobile: clicking sidebar header (not print button) toggles
+  document.querySelector('.sidebar-header').addEventListener('click', function() {
+    if (window.innerWidth < 768) toggleSidebar();
+  });
+
+  // ── 點擊行程項目 → 更新地圖 ──
+  var currentDay = 1;
+
+  function convertToEmbed(href) {
+    try {
+      var u = new URL(href);
+      // maps/search/?api=1&query=XXX
+      var q = u.searchParams.get('query');
+      if (q) return 'https://maps.google.com/maps?q=' + encodeURIComponent(q) + '&output=embed&z=15';
+      // maps/dir/?api=1&...&destination=XXX
+      var dest = u.searchParams.get('destination');
+      if (dest) return 'https://maps.google.com/maps?q=' + encodeURIComponent(dest) + '&output=embed&z=14';
+    } catch (e) {}
+    return null;
+  }
+
+  function showMapToast() {
+    if (window.innerWidth >= 768) return;
+    var t = document.getElementById('mapToast');
+    t.classList.add('show');
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2200);
+  }
+
+  document.querySelector('.sidebar-body').addEventListener('click', function(e) {
+    // 如果點的是連結本身，讓它正常跳轉，不攔截
+    if (e.target.closest('a')) return;
+
+    var item = e.target.closest('.tl-item');
+    if (!item) return;
+
+    // 取此 item 第一個 tl-link
+    var link = item.querySelector('.tl-link');
+    if (!link) return;
+
+    var embedUrl = convertToEmbed(link.href);
+    if (!embedUrl) return;
+
+    // 更新選中狀態
+    document.querySelectorAll('.tl-item').forEach(function(t) { t.classList.remove('selected'); });
+    item.classList.add('selected');
+
+    // 更新地圖
+    var iframe = document.querySelector('.map-wrap.active iframe');
+    if (iframe) iframe.src = embedUrl;
+
+    showMapToast();
   });
 </script>
-
 </body>
 </html>
