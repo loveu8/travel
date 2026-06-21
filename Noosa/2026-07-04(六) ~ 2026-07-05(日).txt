@@ -1,0 +1,104 @@
+可以，下面是我整理後的**最新版時間軸**，我把你喜歡的排版保留，並加上 **Google Maps 連結**。
+Google Maps 連結我用「搜尋地點 / 導航路線」形式，打開後可以直接按導航。
+
+---
+
+# 總路線 Google Maps
+
+**Day 1 開車主路線**
+[Carina → Glass House Mountains Lookout → The Lookout Cafe → Eumundi Markets / Matso’s → Noosa River Retreat](https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&waypoints=Glass%20House%20Mountains%20Lookout%7CThe%20Lookout%20Cafe%20Glass%20House%20Mountains%7CEumundi%20Markets%7CMatso%27s%20Sunshine%20Coast%20Eumundi&travelmode=driving)
+
+**Day 2 開車主路線**
+[Noosa River Retreat → Noosa Farmers Market → Mount Coolum → Sunshine Plaza → Carina](https://www.google.com/maps/dir/?api=1&origin=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&destination=Carina%20QLD&waypoints=Noosa%20Farmers%20Market%7CMount%20Coolum%20Walking%20Trail%7CSunshine%20Plaza%20Maroochydore&travelmode=driving)
+
+---
+
+# Day 1：2026/07/04（六）
+
+## Glass House Mountains → Eumundi → Noosa
+
+| 時間          | 行程                                                                                     | Google Maps                                                                                                                                                                                                                                                                                                  | 檢視與提醒                                                                                                                      |
+| ----------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| 06:30–07:40 | Carina 出發 → Glass House Mountains Lookout                                              | [導航](https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Glass%20House%20Mountains%20Lookout&travelmode=driving)                                                                                                                                                                          | 早點出發是對的，停車、拍照、上廁所都比較舒服。                                                                                                    |
+| 07:40–08:40 | **Glass House Mountains Lookout** 抓 1 小時                                               | [地圖](https://www.google.com/maps/search/?api=1&query=Glass%20House%20Mountains%20Lookout)                                                                                                                                                                                                                    | OK。這裡是觀景＋短步道，不是正式爬山。官方資料顯示 day-use area 24 小時開放，lookout track 約 800m one way，Grade 3。([parks.qld.gov.au][1])               |
+| 08:40–08:55 | 前往早餐地點                                                                                 | [導航到 The Lookout Cafe](https://www.google.com/maps/dir/?api=1&origin=Glass%20House%20Mountains%20Lookout&destination=The%20Lookout%20Cafe%20Glass%20House%20Mountains&travelmode=driving)                                                                                                                    | 這段短移動即可。                                                                                                                   |
+| 08:55–09:50 | **Breakfast：The Lookout Cafe**；備案 The Coffee Club Café - Beerwah                       | [The Lookout Cafe](https://www.google.com/maps/search/?api=1&query=The%20Lookout%20Cafe%20Glass%20House%20Mountains) / [The Coffee Club Beerwah](https://www.google.com/maps/search/?api=1&query=The%20Coffee%20Club%20Cafe%20Beerwah)                                                                       | **首選 The Lookout Cafe**。有 vegetarian / vegan options，營業時間官方列 08:30–14:30。預算抓 AUD 20–30 / 人。([glassonglasshouse.com.au][2]) |
+| 09:50–10:50 | 前往 Eumundi                                                                             | [導航](https://www.google.com/maps/dir/?api=1&origin=The%20Lookout%20Cafe%20Glass%20House%20Mountains&destination=Eumundi%20Markets&travelmode=driving)                                                                                                                                                        | 週六＋school holiday，停車時間要保守。                                                                                                 |
+| 10:50–13:30 | **Eumundi Markets + Lunch**；Matso’s 當坐下休息備案                                            | [Eumundi Markets](https://www.google.com/maps/search/?api=1&query=Eumundi%20Markets) / [Matso’s Sunshine Coast](https://www.google.com/maps/search/?api=1&query=Matso%27s%20Sunshine%20Coast%20Eumundi)                                                                                                      | Eumundi Markets 週六 07:30–14:00。午餐以市集小吃最容易控制 AUD 15–25；Matso’s 比較舒服但主餐＋飲料可能 AUD 30–40。([The Original Eumundi Markets][3])   |
+| 13:30–14:15 | Eumundi → Noosa River Retreat Holiday Apartments                                       | [導航](https://www.google.com/maps/dir/?api=1&origin=Eumundi%20Markets&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&travelmode=driving)                                                                                                                                             | 建議不要拖到市場 14:00 才離開，避免 check-in 太晚。                                                                                         |
+| 14:15–15:15 | **Check-in + 放行李 + 休息**                                                                | [地圖](https://www.google.com/maps/search/?api=1&query=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville)                                                                                                                                                                                            | 飯店官方列 check-in 2pm onwards、check-out 10am，所以時間 OK。([Noosa River Retreat][4])                                               |
+| 15:15–15:35 | 前往 Noosa National Park Carpark                                                         | [導航](https://www.google.com/maps/dir/?api=1&origin=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&destination=Noosa%20National%20Park%20Carpark&travelmode=driving)                                                                                                                             | 週末 carpark 可能滿；滿了就退回 Hastings Street 附近找停車。                                                                                |
+| 15:35–17:00 | **Noosa National Park：Carpark → Tea Tree Bay Beach → Dolphin Point Lookout → Carpark** | [Carpark](https://www.google.com/maps/search/?api=1&query=Noosa%20National%20Park%20Carpark) / [Tea Tree Bay](https://www.google.com/maps/search/?api=1&query=Tea%20Tree%20Bay%20Beach%20Noosa) / [Dolphin Point Lookout](https://www.google.com/maps/search/?api=1&query=Dolphin%20Point%20Lookout%20Noosa) | 這段請標成 **Return / Out-and-back**，不是 loop。官方資料顯示 Dolphin Point 約 1.2km one way；你這樣走抓 75–100 分鐘合理。([parks.qld.gov.au][5])     |
+| 17:00–17:30 | **Massimo’s Gelateria**                                                                | [地圖](https://www.google.com/maps/search/?api=1&query=Massimo%27s%20Gelateria%20Noosa)                                                                                                                                                                                                                        | 走完吃 gelato 很順。Massimo’s Instagram 標示週五六開到 21:30，週日到週四 21:00。([Instagram][6])                                               |
+| 18:00–19:30 | **Dinner：餐廳 / 自理**                                                                     | [Leela Noosa](https://www.google.com/maps/search/?api=1&query=Leela%20Noosa) / [Raw + Rice Noosa](https://www.google.com/maps/search/?api=1&query=Raw%20and%20Rice%20Noosa) / [Somedays Pizza Noosa](https://www.google.com/maps/search/?api=1&query=Somedays%20Pizza%20Noosa)                               | 最推薦控預算：**Leela Noosa 或 Raw + Rice**。Somedays Pizza 氣氛好，但比較容易接近 AUD 30–40。                                                  |
+
+---
+
+## Day 1 餐廳與素食預算整理
+
+| 餐     | 推薦                             |                                素食選項 |          預算判斷 |
+| ----- | ------------------------------ | ----------------------------------: | ------------: |
+| 早餐    | The Lookout Cafe               |        有 vegetarian / vegan options | AUD 20–30 / 人 |
+| 早餐備案  | The Coffee Club Café - Beerwah |                    有素食、部分可 vegan 調整 | AUD 20–30 / 人 |
+| 午餐    | Eumundi Markets                |                          現場通常好找素食小吃 | AUD 15–25 / 人 |
+| 午餐備案  | Matso’s Sunshine Coast Brewery |    有 vegetarian / vegan-friendly 選項 | AUD 25–40 / 人 |
+| 晚餐首選  | Leela Noosa                    |                             素食咖哩選擇多 | AUD 20–30 / 人 |
+| 晚餐輕食  | Raw + Rice Noosa               | 有 tofu / mushroom / vegan sauce 類選擇 | AUD 17–25 / 人 |
+| 晚餐氣氛版 | Somedays Pizza Noosa           |        有 vegetarian / vegan options | AUD 30–40 / 人 |
+
+---
+
+# Day 2：2026/07/05（日）
+
+## Noosa Farmers Market → Mount Coolum → Sunshine Plaza → Carina
+
+| 時間                  | 行程                                 | Google Maps                                                                                                                                                                     | 檢視與提醒                                                                                                                                                                                                     |
+| ------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 07:00–08:10         | **Breakfast：Noosa Farmers Market** | [地圖](https://www.google.com/maps/search/?api=1&query=Noosa%20Farmers%20Market)                                                                                                  | 官方標示 Sunday 07:00–midday。早餐抓 AUD 10–25 / 人，素食選擇通常容易找。([Noosa Farmers Market][7])                                                                                                                          |
+| 08:10–08:25         | 回飯店                                | [導航](https://www.google.com/maps/dir/?api=1&origin=Noosa%20Farmers%20Market&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&travelmode=driving)         | 建議不要在市場逛太久，後面還要爬 Mount Coolum。                                                                                                                                                                            |
+| 08:25–09:00         | 收拾行李                               | —                                                                                                                                                                               | 這段很重要，不要壓縮。                                                                                                                                                                                               |
+| 09:00               | **Checkout**                       | [飯店地圖](https://www.google.com/maps/search/?api=1&query=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville)                                                             | 飯店 check-out 是 10am，你 9 點退房很安全。([Noosa River Retreat][4])                                                                                                                                                 |
+| 09:00–09:40         | Noosa → Mount Coolum Walking Trail | [導航](https://www.google.com/maps/dir/?api=1&origin=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&destination=Mount%20Coolum%20Walking%20Trail&travelmode=driving) | 抵達後先上廁所、整理水和外套。                                                                                                                                                                                           |
+| 09:40–10:00         | 停車、整理、暖身                           | [地圖](https://www.google.com/maps/search/?api=1&query=Mount%20Coolum%20Walking%20Trail)                                                                                          | Mount Coolum 停車也可能熱門，保留 20 分鐘比較安全。                                                                                                                                                                        |
+| 10:00–12:00         | **Mount Coolum Walking Trail**     | [地圖](https://www.google.com/maps/search/?api=1&query=Mount%20Coolum%20Walking%20Trail)                                                                                          | 官方資料寫 Grade 4，有 steep / rocky sections，建議 about 2 hrs return。你抓 2 小時正確。([parks.qld.gov.au][8])                                                                                                            |
+| 12:00–12:20         | 下山休息、補水、換衣服                        | —                                                                                                                                                                               | 這段一定要留，不然午餐會很狼狽。                                                                                                                                                                                          |
+| 12:20–12:50         | Mount Coolum → Sunshine Plaza      | [導航](https://www.google.com/maps/dir/?api=1&origin=Mount%20Coolum%20Walking%20Trail&destination=Sunshine%20Plaza%20Maroochydore&travelmode=driving)                             | 你原本 11:30 午餐太趕，改 12:50 比較穩。                                                                                                                                                                               |
+| 12:50–14:00         | **Lunch：Sunshine Plaza**           | [地圖](https://www.google.com/maps/search/?api=1&query=Sunshine%20Plaza%20Maroochydore)                                                                                           | 推薦 Grill’d、Wara Sushi、Little Red Dumpling 或 food court。Grill’d Sunshine Plaza 標示週日 10:30–21:00，Wara Sushi 週日 10:30–20:00，Little Red Dumpling Sunshine Plaza 週日 11:00–21:00。([Grill'd Healthy Burgers][9]) |
+| 14:00–15:40 / 16:00 | Sunshine Plaza → Carina            | [導航](https://www.google.com/maps/dir/?api=1&origin=Sunshine%20Plaza%20Maroochydore&destination=Carina%20QLD&travelmode=driving)                                                 | 週日下午回布里斯本，車流可能變慢，抓 1.5–2 小時比較穩。                                                                                                                                                                           |
+
+---
+
+## Day 2 餐廳與素食預算整理
+
+| 餐    | 推薦                                 |                                 素食選項 |          預算判斷 |
+| ---- | ---------------------------------- | -----------------------------------: | ------------: |
+| 早餐   | Noosa Farmers Market               |                   水果、麵包、咖啡、蔬食攤位通常容易找 | AUD 10–25 / 人 |
+| 午餐   | Grill’d Sunshine Plaza             | vegetarian / vegan / plant-based 類選擇 | AUD 20–30 / 人 |
+| 午餐備案 | Wara Sushi Sunshine Plaza          |                         蔬菜壽司、豆腐、蛋類選擇 | AUD 15–30 / 人 |
+| 午餐備案 | Little Red Dumpling Sunshine Plaza |               有蔬食類可選，但要現場確認 vegan 細節 | AUD 20–30 / 人 |
+| 最省事  | Sunshine Plaza food court          |                            選擇最多、最好分流 | AUD 15–25 / 人 |
+
+---
+
+# 最終版重點
+
+這版行程我認為可以定稿：
+
+**Day 1**
+Carina → Glass House Mountains Lookout → The Lookout Cafe → Eumundi Markets / Matso’s → Noosa River Retreat → Noosa National Park 短線 → Massimo’s → Dinner
+
+**Day 2**
+Noosa Farmers Market → Checkout → Mount Coolum → Sunshine Plaza lunch → Carina
+
+最重要的修正已經完成：
+**Day 1 不會太累，Day 2 午餐改到 12:50 左右，Noosa National Park 改成 Return / Out-and-back，不寫 Loop。**
+
+[1]: https://parks.qld.gov.au/parks/beerburrum-beerwah/attractions/glass-house-mountains-lookout-day-use-area?utm_source=chatgpt.com "Glass House Mountains lookout day-use area"
+[2]: https://www.glassonglasshouse.com.au/the_lookout_cafe?utm_source=chatgpt.com "The Lookout Cafe"
+[3]: https://eumundimarkets.com.au/?utm_source=chatgpt.com "Eumundi Markets | The Original Eumundi Markets"
+[4]: https://www.noosariverretreat.com/facilities/?utm_source=chatgpt.com "Facilities | Noosa River Retreat | Noosaville"
+[5]: https://parks.qld.gov.au/parks/noosa/journeys/coastal-walk?utm_source=chatgpt.com "Coastal Walk | Noosa National Park"
+[6]: https://www.instagram.com/massimosgelateria/?hl=en&utm_source=chatgpt.com "Massimo's Gelateria (@massimosgelateria)"
+[7]: https://noosafarmersmarket.com.au/?srsltid=AfmBOoqQPCsKdQcVPBKFAww6Npn9s5u98hGGwmwzQp1WoulRkhMYbSlZ&utm_source=chatgpt.com "Fresh and Local Produce at Noosa Farmers Market | Shop Now!"
+[8]: https://parks.qld.gov.au/parks/mount-coolum/things-to-do?utm_source=chatgpt.com "Things to do | Mount Coolum National Park"
+[9]: https://grilld.com.au/restaurants/queensland/sunshine-plaza?utm_source=chatgpt.com "Grill'd Sunshine Plaza - Healthy Burger Restaurant"
