@@ -84,8 +84,10 @@ function showMapToast() {
 
   function onDrag(clientX) {
     if (!isDragging) return;
+    var minW = Math.floor(window.innerWidth / 4);
+    var maxW = Math.floor(window.innerWidth / 2);
     var newW = window.innerWidth - clientX;
-    newW = Math.max(280, Math.min(640, newW));
+    newW = Math.max(minW, Math.min(maxW, newW));
     sidebarEl.style.width = newW + 'px';
   }
 
@@ -107,11 +109,11 @@ function showMapToast() {
 
   window.addEventListener('resize', function() {
     if (window.innerWidth < 768) return;
+    var minW = Math.floor(window.innerWidth / 4);
+    var maxW = Math.floor(window.innerWidth / 2);
     var currentW = parseInt(sidebarEl.style.width) || 420;
-    var maxAllowed = window.innerWidth - 320;
-    if (currentW > maxAllowed) {
-      sidebarEl.style.width = Math.max(280, maxAllowed) + 'px';
-    }
+    if (currentW > maxW) sidebarEl.style.width = maxW + 'px';
+    if (currentW < minW) sidebarEl.style.width = minW + 'px';
   });
 })();
 

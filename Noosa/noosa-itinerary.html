@@ -21,7 +21,7 @@
       src="https://maps.google.com/maps?q=Mount+Ngungun+Glass+House+Mountains+Queensland&output=embed&z=10"
       loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Day1 Map">
     </iframe>
-    <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&waypoints=Mount%20Ngungun%20Glass%20House%20Mountains%7CThe%20Coffee%20Club%20Beerwah%7CEumundi%20Markets&travelmode=driving"
+    <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Noosa%20National%20Park%20Carpark&waypoints=Mount%20Ngungun%20Glass%20House%20Mountains%7CThe%20Coffee%20Club%20Beerwah%7CEumundi%20Markets%7CNoosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&travelmode=driving"
        target="_blank" class="map-nav-float d1">🗺️ 開啟完整導航</a>
   </div>
 
@@ -42,7 +42,8 @@
       <span class="chip d1" data-chip="ngungun">Mt Ngungun</span><span class="chip-arrow">→</span>
       <span class="chip d1" data-chip="coffeeclub">Coffee Club</span><span class="chip-arrow">→</span>
       <span class="chip d1" data-chip="eumundi">Eumundi Markets</span><span class="chip-arrow">→</span>
-      <span class="chip d1" data-chip="noosa">Noosa River Retreat</span>
+      <span class="chip d1" data-chip="noosa">Noosa River Retreat</span><span class="chip-arrow">→</span>
+      <span class="chip d1" data-chip="noosanp">Noosa National Park</span>
     </div>
     <div class="chip-strip" id="chip-day2" style="display:none">
       <span class="chip d2" data-chip="hotel">Noosa River Retreat</span><span class="chip-arrow">→</span>
@@ -78,7 +79,7 @@
         <span class="s-emoji">🌊</span>
         <div>
           <div class="sidebar-name">NOOSA 週末行程</div>
-          <div class="sidebar-sub">2026/07/04–05 · 全程自駕 · 素食友好</div>
+          <div class="sidebar-sub">2026/07/04–05 · 全程自駕 · 素食友善</div>
         </div>
       </div>
       <button class="print-btn" onclick="event.stopPropagation(); window.print()">🖨️ 列印</button>
@@ -88,7 +89,7 @@
     <div class="day-tabs">
       <button class="day-tab active" onclick="switchDay(1, this)">
         <span class="tab-label">Day 1</span>
-        <span class="tab-sub">07/04 (六) Ngungun→努薩</span>
+        <span class="tab-sub">07/04 (六) Ngungun→努沙</span>
       </button>
       <button class="day-tab" onclick="switchDay(2, this)">
         <span class="tab-label">Day 2</span>
@@ -104,8 +105,8 @@
     <div class="day-content active" id="day1-content">
 
       <div class="route-strip d1">
-        <span class="route-strip-label">🗺️ Mt Ngungun → Coffee Club → Eumundi → Noosa River Retreat</span>
-        <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&waypoints=Mount%20Ngungun%20Glass%20House%20Mountains%7CThe%20Coffee%20Club%20Beerwah%7CEumundi%20Markets&travelmode=driving"
+        <span class="route-strip-label">🗺️ Mt Ngungun → Coffee Club → Eumundi → Noosa River Retreat → Noosa National Park</span>
+        <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Noosa%20National%20Park%20Carpark&waypoints=Mount%20Ngungun%20Glass%20House%20Mountains%7CThe%20Coffee%20Club%20Beerwah%7CEumundi%20Markets%7CNoosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&travelmode=driving"
            target="_blank" class="nav-btn d1">導航</a>
       </div>
 
@@ -282,7 +283,7 @@
             <div class="tl-links">
               <a href="https://www.google.com/maps/search/?api=1&query=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville" target="_blank" class="tl-link d1">📍 地圖</a>
             </div>
-            <div class="tl-tags"><span class="tag tag-rest">Check-in from 2pm</span></div>
+            <div class="tl-tags"><span class="tag tag-rest">下午 2 點後可入住</span></div>
             <div class="tl-note">放行李、稍作休息，準備下午健行。</div>
             <div class="tl-photos">
               <img class="tl-photo" src="pics/Noosa River Retreat Holiday Apartments.JPG" alt="Noosa River Retreat" onclick="openLightbox(this.src)">
@@ -291,30 +292,30 @@
         </div>
 
         <!-- Drive to Noosa NP -->
-        <div class="tl-item">
+        <div class="tl-item" data-chip="noosanp">
           <div class="tl-time">15:15<br>15:35</div>
           <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
           <div class="tl-body">
-            <div class="tl-main">🚗 前往 Noosa National Park Carpark</div>
+            <div class="tl-main">🚗 前往 Noosa National Park 停車場</div>
             <div class="tl-links">
               <a href="https://www.google.com/maps/dir/?api=1&origin=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&destination=Noosa%20National%20Park%20Carpark&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
             </div>
-            <div class="tl-note">週末 carpark 可能滿，備案停 Hastings Street 附近。</div>
+            <div class="tl-note">週末停車場可能客滿，備案停 Hastings Street 附近。</div>
           </div>
         </div>
 
         <!-- Noosa Coastal Walk -->
-        <div class="tl-item">
+        <div class="tl-item" data-chip="noosanp">
           <div class="tl-time">15:35<br>17:00</div>
           <div class="tl-axis"><div class="tl-dot dot-green"></div><div class="tl-line"></div></div>
           <div class="tl-body">
             <div class="tl-main">🌿 Noosa National Park：Tea Tree Bay → Dolphin Point</div>
             <div class="tl-links">
-              <a href="https://www.google.com/maps/search/?api=1&query=Noosa%20National%20Park%20Carpark" target="_blank" class="tl-link d1">📍 Carpark</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Noosa%20National%20Park%20Carpark" target="_blank" class="tl-link d1">📍 停車場</a>
               <a href="https://www.google.com/maps/search/?api=1&query=Tea%20Tree%20Bay%20Beach%20Noosa" target="_blank" class="tl-link d1">📍 Tea Tree Bay</a>
               <a href="https://www.google.com/maps/search/?api=1&query=Dolphin%20Point%20Lookout%20Noosa" target="_blank" class="tl-link d1">📍 Dolphin Point</a>
             </div>
-            <div class="tl-tags"><span class="tag tag-hike">Out-and-back（非 Loop）</span><span class="tag tag-hike">1.2km 單程</span><span class="tag tag-hike">約 75–100 分鐘</span></div>
+            <div class="tl-tags"><span class="tag tag-hike">原路折返（非環線）</span><span class="tag tag-hike">1.2km 單程</span><span class="tag tag-hike">約 75–100 分鐘</span></div>
             <div class="tl-note">沿海步道，有機會看到海豚。</div>
             <div class="tl-photos">
               <img class="tl-photo" src="pics/Noosa Coastal Walk.JPG" alt="Noosa Coastal Walk" onclick="openLightbox(this.src)">
@@ -416,11 +417,11 @@
           <div class="tl-time">09:00</div>
           <div class="tl-axis"><div class="tl-dot dot-purple"></div><div class="tl-line"></div></div>
           <div class="tl-body">
-            <div class="tl-main">🏨 Checkout · Noosa River Retreat</div>
+            <div class="tl-main">🏨 退房 · Noosa River Retreat</div>
             <div class="tl-links">
               <a href="https://www.google.com/maps/search/?api=1&query=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville" target="_blank" class="tl-link d2">📍 地圖</a>
             </div>
-            <div class="tl-tags"><span class="tag tag-rest">官方 Check-out 10am 前</span></div>
+            <div class="tl-tags"><span class="tag tag-rest">官方退房時間 10:00 前</span></div>
             <div class="tl-note">09:00 退房非常安全，行程不趕。</div>
           </div>
         </div>
@@ -525,7 +526,7 @@
       <div class="tips-box">
         <div class="tips-title">⚠️ 重要提醒</div>
         <ul class="tips-list">
-          <li>Noosa NP Carpark 週末可能滿，備案停 Hastings Street 附近</li>
+          <li>Noosa NP 停車場週末可能客滿，備案停 Hastings Street 附近</li>
           <li>Mount Coolum Grade 4，帶足夠水分和防滑登山鞋</li>
           <li>Eumundi 週六 + 學校假期，停車預留多一點時間</li>
           <li>週日下午回布里斯本，抓 2 小時車程比較穩</li>

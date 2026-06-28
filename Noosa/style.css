@@ -455,6 +455,8 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   gap: 6px;
   margin-top: 8px;
+  max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -501,9 +503,10 @@ a { color: inherit; text-decoration: none; }
 /* ── 12. PARALLEL CARDS ── */
 .tl-parallel {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 7px;
   margin-top: 8px;
+  min-width: 0;
 }
 .tl-card {
   border-radius: 10px;
@@ -511,6 +514,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   flex-direction: column;
   gap: 5px;
+  min-width: 0;
 }
 .tl-card-main {
   background: var(--green-bg);
@@ -638,8 +642,6 @@ a { color: inherit; text-decoration: none; }
     transform: none !important;
     transition: none;
     width: 420px;
-    min-width: 280px;
-    max-width: 640px;
     flex-shrink: 0;
     height: 100vh;
     max-height: 100vh;
@@ -741,7 +743,7 @@ a { color: inherit; text-decoration: none; }
   .tips-list { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 12px; }
   .tips-list li { font-size: 8.5px; }
 
-  .tl-parallel { grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 5px; }
+  .tl-parallel { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; margin-top: 5px; }
   .tl-card { padding: 6px 8px; border-radius: 7px; page-break-inside: avoid; break-inside: avoid; }
   .tl-card-label { font-size: 7.5px; }
   .tl-card-name  { font-size: 9px; }
