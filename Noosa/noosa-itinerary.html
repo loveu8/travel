@@ -1475,19 +1475,40 @@ a { color: inherit; text-decoration: none; }
   });
 
   document.querySelector('.sidebar-body').addEventListener('click', function(e) {
+    var tlLink = e.target.closest('a.tl-link');
+
+    if (tlLink) {
+      // 手機：攔截 tl-link，改為更新嵌入地圖，不跳 Google Maps
+      // 桌面：讓連結正常開新分頁
+      if (window.innerWidth < 768) {
+        e.preventDefault();
+        var itemFromLink = tlLink.closest('.tl-item');
+        if (itemFromLink) {
+          document.querySelectorAll('.tl-item').forEach(function(t) { t.classList.remove('selected'); });
+          itemFromLink.classList.add('selected');
+          setActiveChip(itemFromLink.dataset.chip || null);
+          var eu = convertToEmbed(tlLink.href);
+          if (eu) {
+            var fr = document.querySelector('.map-wrap.active iframe');
+            if (fr) fr.src = eu;
+          }
+          showMapToast();
+        }
+      }
+      // 桌面：不攔截，讓 target="_blank" 正常開新分頁
+      return;
+    }
+
+    // 點連結以外的 tl-item 區域
     if (e.target.closest('a')) return;
 
     var item = e.target.closest('.tl-item');
     if (!item) return;
 
-    // 更新選中狀態
     document.querySelectorAll('.tl-item').forEach(function(t) { t.classList.remove('selected'); });
     item.classList.add('selected');
-
-    // 底部 chip focus
     setActiveChip(item.dataset.chip || null);
 
-    // 更新地圖
     var link = item.querySelector('.tl-link');
     if (link) {
       var embedUrl = convertToEmbed(link.href);
