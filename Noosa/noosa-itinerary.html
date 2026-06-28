@@ -76,35 +76,41 @@ a { color: inherit; text-decoration: none; }
 .map-wrap.active { display: block; }
 .map-wrap iframe { width: 100%; height: 100%; border: 0; display: block; }
 
-/* Route chips overlay on map (top of map) */
-.map-chips-overlay {
+/* ── MAP CHIP PANEL (bottom of map) ── */
+/* mobile: absolute overlay above bottom sheet */
+.map-chip-panel {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  right: 12px;
+  bottom: 124px;
+  left: 0; right: 0;
   z-index: 10;
-  background: rgba(255,255,255,0.93);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 12px;
-  padding: 8px 12px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.10);
+}
+.chip-strip {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 4px;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.14);
+  padding: 8px 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.chip-strip::-webkit-scrollbar { display: none; }
 
-/* Floating nav button on map */
+/* Floating nav button — top-right corner */
 .map-nav-float {
   position: absolute;
-  bottom: 148px;
+  top: 12px;
+  bottom: auto;
   right: 14px;
   z-index: 10;
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 10px 16px;
+  padding: 8px 14px;
   border-radius: 24px;
   font-size: var(--fs-sm);
   font-weight: 700;
@@ -115,6 +121,42 @@ a { color: inherit; text-decoration: none; }
 }
 .map-nav-float.d1 { background: var(--blue); }
 .map-nav-float.d2 { background: var(--green); }
+
+/* ── RESIZE DIVIDER (desktop only) ── */
+.resize-divider {
+  display: none;
+}
+@media (min-width: 768px) {
+  .resize-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 8px;
+    flex-shrink: 0;
+    height: 100vh;
+    background: #e2e8f0;
+    cursor: col-resize;
+    z-index: 20;
+    transition: background 0.15s, width 0.15s;
+    user-select: none;
+  }
+  .resize-divider:hover,
+  .resize-divider.dragging {
+    background: var(--orange-l);
+    width: 10px;
+  }
+  .resize-divider::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 32px;
+    border-radius: 2px;
+    background: currentColor;
+    color: #a0aec0;
+    box-shadow: 0 -8px 0 #a0aec0, 0 8px 0 #a0aec0;
+  }
+}
 
 /* ────────────────────────────
    SIDEBAR / BOTTOM SHEET
@@ -144,7 +186,12 @@ a { color: inherit; text-decoration: none; }
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--orange-l) transparent;
 }
+.sidebar-body::-webkit-scrollbar { width: 4px; }
+.sidebar-body::-webkit-scrollbar-track { background: transparent; }
+.sidebar-body::-webkit-scrollbar-thumb { background: var(--orange-l); border-radius: 2px; }
 
 /* Handle */
 .sheet-handle {
@@ -397,11 +444,13 @@ a { color: inherit; text-decoration: none; }
 }
 .fr-budget { font-size: var(--fs-sm); font-weight: 700; color: var(--text); white-space: nowrap; padding-top: 2px; }
 
-/* Chips (used in map overlay) */
-.chip { font-size: var(--fs-xs); padding: 3px 9px; border-radius: 10px; font-weight: 600; white-space: nowrap; }
+/* Chips */
+.chip { font-size: var(--fs-xs); padding: 3px 9px; border-radius: 10px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background 0.15s, color 0.15s, box-shadow 0.15s; }
 .chip.d1 { background: var(--blue-bg); color: #2b6cb0; border: 1px solid var(--blue-l); }
 .chip.d2 { background: var(--green-bg); color: #276749; border: 1px solid var(--green-l); }
-.chip-arrow { color: var(--gray); font-size: var(--fs-xs); }
+.chip.active.d1 { background: var(--blue); color: white; border-color: transparent; box-shadow: 0 1px 5px rgba(49,130,206,0.45); }
+.chip.active.d2 { background: var(--green); color: white; border-color: transparent; box-shadow: 0 1px 5px rgba(56,161,105,0.45); }
+.chip-arrow { color: var(--gray); font-size: var(--fs-xs); flex-shrink: 0; }
 
 /* Map updated toast (mobile) */
 .map-toast {
@@ -422,6 +471,129 @@ a { color: inherit; text-decoration: none; }
   white-space: nowrap;
 }
 .map-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── TIMELINE PHOTOS ── */
+.tl-photos {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tl-photos::-webkit-scrollbar { display: none; }
+.tl-photo {
+  width: 100px;
+  height: 68px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+.tl-photo:hover { transform: scale(1.04); box-shadow: 0 3px 10px rgba(0,0,0,0.22); }
+
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.88);
+  justify-content: center;
+  align-items: center;
+}
+.lightbox.open { display: flex; }
+.lightbox img {
+  max-width: 92vw;
+  max-height: 88vh;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.lightbox-close {
+  position: absolute;
+  top: 16px; right: 20px;
+  font-size: 32px;
+  color: white;
+  cursor: pointer;
+  line-height: 1;
+  user-select: none;
+}
+
+/* ── PARALLEL CARDS (主要 + 備案 side-by-side) ── */
+.tl-parallel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin-top: 8px;
+}
+.tl-card {
+  border-radius: 10px;
+  padding: 10px 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.tl-card-main {
+  background: var(--green-bg);
+  border: 1.5px solid var(--green-l);
+}
+.tl-card-backup {
+  background: var(--orange-bg);
+  border: 1.5px dashed var(--orange-l);
+}
+.tl-card-label {
+  font-size: var(--fs-2xs);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.tl-card-main .tl-card-label  { color: #276749; }
+.tl-card-backup .tl-card-label { color: var(--orange-d); }
+.tl-card-name {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+.tl-card-tags { display: flex; flex-wrap: wrap; gap: 3px; }
+.tl-card-links { display: flex; flex-wrap: wrap; gap: 3px; }
+.tl-card-note {
+  font-size: var(--fs-2xs);
+  color: var(--text-s);
+  line-height: 1.45;
+}
+/* photos inside a card stay scrollable */
+.tl-card .tl-photos { margin-top: 4px; }
+.tl-card .tl-photo  { width: 80px; height: 54px; }
+
+/* stack on very narrow screens */
+@media (max-width: 380px) {
+  .tl-parallel { grid-template-columns: 1fr; }
+}
+
+/* ── BACKUP BADGE ── */
+.badge-backup {
+  font-size: var(--fs-2xs);
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: #fffaf0;
+  color: var(--orange-d);
+  border: 1px solid var(--orange-l);
+  font-weight: 700;
+}
+.badge-main {
+  font-size: var(--fs-2xs);
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: var(--green-bg);
+  color: #276749;
+  border: 1px solid var(--green-l);
+  font-weight: 700;
+}
 
 /* ── TIPS BOX ── */
 .tips-box {
@@ -457,24 +629,39 @@ a { color: inherit; text-decoration: none; }
 
   .app { flex-direction: row; }
 
-  /* Map panel becomes right side */
+  /* Map panel — flex column so chip panel is in-flow */
   .map-panel {
     position: relative;
     inset: auto;
     flex: 1;
     height: 100vh;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
   }
+  /* Map wrap takes remaining height */
+  .map-wrap {
+    position: relative !important;
+    inset: auto !important;
+    flex: 1;
+    min-height: 0;
+  }
+  .map-wrap.active { display: flex; flex-direction: column; }
+  .map-wrap iframe { flex: 1; }
   .map-nav-float {
-    bottom: 24px;
+    top: 12px;
+    bottom: auto;
     right: 16px;
   }
-  .map-chips-overlay {
-    left: 12px;
-    right: 12px;
-    top: 12px;
-    max-width: none;
+  /* Chip panel — in-flow, not floating */
+  .map-chip-panel {
+    position: relative;
+    bottom: auto;
+    border-radius: 0;
+    box-shadow: 0 -1px 0 var(--border);
+    flex-shrink: 0;
   }
+  .chip-strip { padding: 9px 16px; font-size: 13px; }
 
   /* Sidebar becomes left panel */
   .sidebar {
@@ -482,7 +669,9 @@ a { color: inherit; text-decoration: none; }
     bottom: auto; left: auto; right: auto;
     transform: none !important;
     transition: none;
-    width: 400px;
+    width: 420px;
+    min-width: 280px;
+    max-width: 640px;
     flex-shrink: 0;
     height: 100vh;
     max-height: 100vh;
@@ -520,6 +709,8 @@ a { color: inherit; text-decoration: none; }
 
   .app { display: block !important; height: auto !important; }
   .map-panel { display: none !important; }
+  .resize-divider { display: none !important; }
+  .map-chip-panel { display: none !important; }
 
   .sidebar {
     position: static !important;
@@ -587,6 +778,16 @@ a { color: inherit; text-decoration: none; }
   .tips-title { font-size: 8.5px; margin-bottom: 5px; }
   .tips-list { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 12px; }
   .tips-list li { font-size: 8.5px; }
+
+  /* parallel cards in print */
+  .tl-parallel { grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 5px; }
+  .tl-card { padding: 6px 8px; border-radius: 7px; page-break-inside: avoid; break-inside: avoid; }
+  .tl-card-label { font-size: 7.5px; }
+  .tl-card-name  { font-size: 9px; }
+  .tl-card-note  { font-size: 7.5px; }
+  .tl-card-tags  { gap: 2px; }
+  .tl-card .tl-photo { width: 60px; height: 40px; }
+  .tl-lightbox { display: none !important; }
 }
 </style>
 </head>
@@ -600,30 +801,16 @@ a { color: inherit; text-decoration: none; }
 
   <!-- Day 1 Map -->
   <div class="map-wrap active" id="map-day1">
-    <div class="map-chips-overlay">
-      <span class="chip d1">Carina</span><span class="chip-arrow">→</span>
-      <span class="chip d1">Glass House Mtns</span><span class="chip-arrow">→</span>
-      <span class="chip d1">The Lookout Cafe</span><span class="chip-arrow">→</span>
-      <span class="chip d1">Eumundi Markets</span><span class="chip-arrow">→</span>
-      <span class="chip d1">Noosa River Retreat</span>
-    </div>
     <iframe
-      src="https://maps.google.com/maps?q=Glass+House+Mountains+Lookout+Queensland&output=embed&z=10"
+      src="https://maps.google.com/maps?q=Mount+Ngungun+Glass+House+Mountains+Queensland&output=embed&z=10"
       loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Day1 Map">
     </iframe>
-    <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&waypoints=Glass%20House%20Mountains%20Lookout%7CThe%20Lookout%20Cafe%20Glass%20House%20Mountains%7CEumundi%20Markets%7CMatso%27s%20Sunshine%20Coast%20Eumundi&travelmode=driving"
+    <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&waypoints=Mount%20Ngungun%20Glass%20House%20Mountains%7CThe%20Coffee%20Club%20Beerwah%7CEumundi%20Markets&travelmode=driving"
        target="_blank" class="map-nav-float d1">🗺️ 開啟完整導航</a>
   </div>
 
   <!-- Day 2 Map -->
   <div class="map-wrap" id="map-day2">
-    <div class="map-chips-overlay">
-      <span class="chip d2">Noosa River Retreat</span><span class="chip-arrow">→</span>
-      <span class="chip d2">Farmers Market</span><span class="chip-arrow">→</span>
-      <span class="chip d2">Mt Coolum</span><span class="chip-arrow">→</span>
-      <span class="chip d2">Viet Haus</span><span class="chip-arrow">→</span>
-      <span class="chip d2">Carina</span>
-    </div>
     <iframe
       src="https://maps.google.com/maps?q=Mount+Coolum+National+Park+Queensland&output=embed&z=10"
       loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Day2 Map">
@@ -632,8 +819,28 @@ a { color: inherit; text-decoration: none; }
        target="_blank" class="map-nav-float d2">🗺️ 開啟完整導航</a>
   </div>
 
+  <!-- Chip panel — in-flow bottom panel -->
+  <div class="map-chip-panel" id="mapChipPanel">
+    <div class="chip-strip" id="chip-day1">
+      <span class="chip d1" data-chip="carina">Carina</span><span class="chip-arrow">→</span>
+      <span class="chip d1" data-chip="ngungun">Mt Ngungun</span><span class="chip-arrow">→</span>
+      <span class="chip d1" data-chip="coffeeclub">Coffee Club</span><span class="chip-arrow">→</span>
+      <span class="chip d1" data-chip="eumundi">Eumundi Markets</span><span class="chip-arrow">→</span>
+      <span class="chip d1" data-chip="noosa">Noosa River Retreat</span>
+    </div>
+    <div class="chip-strip" id="chip-day2" style="display:none">
+      <span class="chip d2" data-chip="hotel">Noosa River Retreat</span><span class="chip-arrow">→</span>
+      <span class="chip d2" data-chip="farmersmarket">Farmers Market</span><span class="chip-arrow">→</span>
+      <span class="chip d2" data-chip="coolum">Mt Coolum</span><span class="chip-arrow">→</span>
+      <span class="chip d2" data-chip="viethaus">Viet Haus</span><span class="chip-arrow">→</span>
+      <span class="chip d2" data-chip="home">Carina</span>
+    </div>
+  </div>
+
 </div><!-- /map-panel -->
 
+<!-- Draggable resize divider (desktop only) -->
+<div class="resize-divider" id="resizeDivider" title="拖曳調整地圖與行程寬度"></div>
 
 <!-- ══════════════════════════════
      SIDEBAR / BOTTOM SHEET
@@ -665,7 +872,7 @@ a { color: inherit; text-decoration: none; }
     <div class="day-tabs">
       <button class="day-tab active" onclick="switchDay(1, this)">
         <span class="tab-label">Day 1</span>
-        <span class="tab-sub">07/04 (六) 玻璃屋→努薩</span>
+        <span class="tab-sub">07/04 (六) Ngungun→努薩</span>
       </button>
       <button class="day-tab" onclick="switchDay(2, this)">
         <span class="tab-label">Day 2</span>
@@ -681,92 +888,163 @@ a { color: inherit; text-decoration: none; }
     <div class="day-content active" id="day1-content">
 
       <div class="route-strip d1">
-        <span class="route-strip-label">🗺️ Glass House Mtns → Eumundi → Noosa River Retreat</span>
-        <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&waypoints=Glass%20House%20Mountains%20Lookout%7CThe%20Lookout%20Cafe%20Glass%20House%20Mountains%7CEumundi%20Markets%7CMatso%27s%20Sunshine%20Coast%20Eumundi&travelmode=driving"
+        <span class="route-strip-label">🗺️ Mt Ngungun → Coffee Club → Eumundi → Noosa River Retreat</span>
+        <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Noosa%20River%20Retreat%20Holiday%20Apartments%20Noosaville&waypoints=Mount%20Ngungun%20Glass%20House%20Mountains%7CThe%20Coffee%20Club%20Beerwah%7CEumundi%20Markets&travelmode=driving"
            target="_blank" class="nav-btn d1">導航</a>
       </div>
 
       <div class="timeline">
 
-        <div class="tl-item">
+        <!-- 出發 -->
+        <div class="tl-item" data-chip="carina">
           <div class="tl-time">06:30<br>07:40</div>
           <div class="tl-axis"><div class="tl-dot dot-blue"></div><div class="tl-line"></div></div>
           <div class="tl-body">
-            <div class="tl-main">🚗 Carina 出發 → Glass House Mountains Lookout</div>
+            <div class="tl-main">🚗 Carina 出發 → Mount Ngungun 步道口</div>
             <div class="tl-links">
-              <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Glass%20House%20Mountains%20Lookout&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Carina%20QLD&destination=Mount%20Ngungun%20Glass%20House%20Mountains%20QLD&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
             </div>
-            <div class="tl-tags"><span class="tag tag-drive">開車 約 70 分鐘</span></div>
-            <div class="tl-note">早出發停車和拍照更舒適。</div>
+            <div class="tl-tags"><span class="tag tag-drive">開車 約 70 分鐘</span><span class="tag tag-warn">⚡ 出發備品</span></div>
+            <div class="tl-note">早出發，停車和準備更充裕。<strong>記得帶簡單麵包跟香蕉備用！</strong></div>
           </div>
         </div>
 
-        <div class="tl-item">
-          <div class="tl-time">07:40<br>08:40</div>
+        <!-- Mount Ngungun - 主要行程（+ 備案並排） -->
+        <div class="tl-item" data-chip="ngungun">
+          <div class="tl-time">07:40<br>09:40</div>
           <div class="tl-axis"><div class="tl-dot dot-green"></div><div class="tl-line"></div></div>
           <div class="tl-body">
-            <div class="tl-main">🏔️ Glass House Mountains Lookout（1 小時）</div>
-            <div class="tl-links">
-              <a href="https://www.google.com/maps/search/?api=1&query=Glass%20House%20Mountains%20Lookout" target="_blank" class="tl-link d1">📍 地圖</a>
+            <div class="tl-main">⛰️ 爬山</div>
+            <div class="tl-parallel">
+
+              <!-- 主要 -->
+              <div class="tl-card tl-card-main">
+                <div class="tl-card-label">✅ 主要行程</div>
+                <div class="tl-card-name">Mount Ngungun Summit Walk</div>
+                <div class="tl-card-tags">
+                  <span class="tag tag-hike">Grade 3</span>
+                  <span class="tag tag-hike">2.4km 來回</span>
+                  <span class="tag tag-hike">2 小時</span>
+                  <span class="tag tag-hike">253m</span>
+                </div>
+                <div class="tl-card-links">
+                  <a href="https://www.google.com/maps/search/?api=1&query=Mount%20Ngungun%20Glass%20House%20Mountains" target="_blank" class="tl-link d1">📍 地圖</a>
+                </div>
+                <div class="tl-card-note">登頂可遠眺玻璃屋山群全景，360° 全景視野。</div>
+                <div class="tl-photos">
+                  <img class="tl-photo" src="pics/Mount Ngungun Summit Track.JPG" alt="Mount Ngungun" onclick="openLightbox(this.src)">
+                  <img class="tl-photo" src="pics/Mount Ngungun Summit Track - 1.JPG" alt="Mount Ngungun Summit" onclick="openLightbox(this.src)">
+                </div>
+              </div>
+
+              <!-- 備案 -->
+              <div class="tl-card tl-card-backup">
+                <div class="tl-card-label">⚡ 備案</div>
+                <div class="tl-card-name">Glass House Mountains Lookout</div>
+                <div class="tl-card-tags">
+                  <span class="tag tag-hike">Grade 3</span>
+                  <span class="tag tag-hike">800m</span>
+                  <span class="tag tag-hike">約 1 小時</span>
+                </div>
+                <div class="tl-card-links">
+                  <a href="https://www.google.com/maps/search/?api=1&query=Glass%20House%20Mountains%20Lookout" target="_blank" class="tl-link d1">📍 地圖</a>
+                </div>
+                <div class="tl-card-note">觀景台短步道，輕鬆版，體力或時間不足時的替代選擇。</div>
+                <div class="tl-photos">
+                  <img class="tl-photo" src="pics/Glass House Mountains Lookout Track.JPG" alt="Glass House Lookout" onclick="openLightbox(this.src)">
+                  <img class="tl-photo" src="pics/Glass House Mountains Lookout Track - 1.JPG" alt="Glass House Lookout 2" onclick="openLightbox(this.src)">
+                </div>
+              </div>
+
             </div>
-            <div class="tl-tags"><span class="tag tag-hike">步道 800m · Grade 3</span><span class="tag tag-hike">Out-and-back</span><span class="tag tag-hike">24 小時開放</span></div>
-            <div class="tl-note">觀景台短步道，不是正式爬山，適合輕裝前往。</div>
           </div>
         </div>
 
+        <!-- 前往 Beerwah -->
         <div class="tl-item">
-          <div class="tl-time">08:40<br>08:55</div>
+          <div class="tl-time">09:40<br>09:55</div>
           <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
           <div class="tl-body">
-            <div class="tl-main">🚗 前往早餐地點</div>
+            <div class="tl-main">🚗 前往 Beerwah Village</div>
             <div class="tl-links">
-              <a href="https://www.google.com/maps/dir/?api=1&origin=Glass%20House%20Mountains%20Lookout&destination=The%20Lookout%20Cafe%20Glass%20House%20Mountains&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=Mount%20Ngungun%20Glass%20House%20Mountains&destination=The%20Coffee%20Club%20Cafe%20Beerwah%20QLD&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
             </div>
-            <div class="tl-tags"><span class="tag tag-drive">短程移動</span></div>
+            <div class="tl-tags"><span class="tag tag-drive">短程 約 10–15 分鐘</span></div>
           </div>
         </div>
 
-        <div class="tl-item">
-          <div class="tl-time">08:55<br>09:50</div>
+        <!-- Coffee Club Beerwah - 爬山後餐點（+ 備案並排） -->
+        <div class="tl-item" data-chip="coffeeclub">
+          <div class="tl-time">09:55<br>11:25</div>
           <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
           <div class="tl-body">
-            <div class="tl-main">☕ 早餐：The Lookout Cafe</div>
-            <div class="tl-links">
-              <a href="https://www.google.com/maps/search/?api=1&query=The%20Lookout%20Cafe%20Glass%20House%20Mountains" target="_blank" class="tl-link d1">📍 The Lookout Cafe</a>
-              <a href="https://www.google.com/maps/search/?api=1&query=The%20Coffee%20Club%20Cafe%20Beerwah" target="_blank" class="tl-link d1">📍 備案：Coffee Club</a>
+            <div class="tl-main">☕ 爬山後餐點 <span class="tag tag-warn" style="font-size:var(--fs-2xs)">含開車緩衝 1.5h</span></div>
+            <div class="tl-parallel">
+
+              <!-- 主要 -->
+              <div class="tl-card tl-card-main">
+                <div class="tl-card-label">✅ 主要</div>
+                <div class="tl-card-name">The Coffee Club Café - Beerwah</div>
+                <div class="tl-card-tags">
+                  <span class="tag tag-food">AUD 20–30/人</span>
+                  <span class="tag tag-food">素食 OK</span>
+                </div>
+                <div class="tl-card-links">
+                  <a href="https://www.google.com/maps/search/?api=1&query=The%20Coffee%20Club%20Cafe%20Beerwah" target="_blank" class="tl-link d1">📍 地圖</a>
+                </div>
+                <div class="tl-card-note">Beerwah Village，爬完山補充體力的好據點。</div>
+              </div>
+
+              <!-- 備案 -->
+              <div class="tl-card tl-card-backup">
+                <div class="tl-card-label">⚡ 備案</div>
+                <div class="tl-card-name">The Lookout Cafe</div>
+                <div class="tl-card-tags">
+                  <span class="tag tag-food">AUD 20–30/人</span>
+                  <span class="tag tag-food">Veg / Vegan OK</span>
+                </div>
+                <div class="tl-card-links">
+                  <a href="https://www.google.com/maps/search/?api=1&query=The%20Lookout%20Cafe%20Glass%20House%20Mountains" target="_blank" class="tl-link d1">📍 地圖</a>
+                </div>
+                <div class="tl-card-note">Glass House Mtns，08:30–14:30。</div>
+              </div>
+
             </div>
-            <div class="tl-tags"><span class="tag tag-food">早餐 AUD 20–30/人</span><span class="tag tag-food">素食 OK</span></div>
-            <div class="tl-note">首選 The Lookout Cafe，營業 08:30–14:30，有 vegetarian/vegan options。</div>
           </div>
         </div>
 
+        <!-- 前往 Eumundi -->
         <div class="tl-item">
-          <div class="tl-time">09:50<br>10:50</div>
+          <div class="tl-time">11:25<br>12:10</div>
           <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
           <div class="tl-body">
             <div class="tl-main">🚗 前往 Eumundi</div>
             <div class="tl-links">
-              <a href="https://www.google.com/maps/dir/?api=1&origin=The%20Lookout%20Cafe%20Glass%20House%20Mountains&destination=Eumundi%20Markets&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
+              <a href="https://www.google.com/maps/dir/?api=1&origin=The%20Coffee%20Club%20Cafe%20Beerwah&destination=Eumundi%20Markets&travelmode=driving" target="_blank" class="tl-link d1">📍 導航</a>
             </div>
-            <div class="tl-tags"><span class="tag tag-drive">開車 約 40 分鐘</span></div>
+            <div class="tl-tags"><span class="tag tag-drive">開車 約 40–45 分鐘</span></div>
             <div class="tl-note">週六 + school holiday，停車時間保守估計。</div>
           </div>
         </div>
 
-        <div class="tl-item">
-          <div class="tl-time">10:50<br>13:30</div>
+        <!-- Eumundi Markets -->
+        <div class="tl-item" data-chip="eumundi">
+          <div class="tl-time">12:10<br>13:30</div>
           <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
           <div class="tl-body">
-            <div class="tl-main">🛍️ Eumundi Markets + 午餐</div>
+            <div class="tl-main">🛍️ Eumundi Markets</div>
             <div class="tl-links">
               <a href="https://www.google.com/maps/search/?api=1&query=Eumundi%20Markets" target="_blank" class="tl-link d1">📍 Eumundi Markets</a>
-              <a href="https://www.google.com/maps/search/?api=1&query=Matso%27s%20Sunshine%20Coast%20Eumundi" target="_blank" class="tl-link d1">📍 Matso's（備案）</a>
             </div>
-            <div class="tl-tags"><span class="tag tag-shop">市集 07:30–14:00</span><span class="tag tag-food">午餐 AUD 15–25/人</span></div>
-            <div class="tl-note">市集小吃最容易控制預算且素食選擇多。備案坐下休息：Matso's（AUD 30–40）。<br><strong>建議 13:30 前離開</strong>，不要等到市場 14:00 關門。</div>
+            <div class="tl-tags"><span class="tag tag-shop">市集 07:30–14:00</span></div>
+            <div class="tl-note">已在 Coffee Club 吃過，這段以逛市集為主。<strong>建議 13:30 前離開</strong>，不要等到 14:00 關門。</div>
+            <div class="tl-photos">
+              <img class="tl-photo" src="pics/Eumundi Markets.JPG" alt="Eumundi Markets" onclick="openLightbox(this.src)">
+            </div>
           </div>
         </div>
 
+        <!-- Eumundi → Noosa -->
         <div class="tl-item">
           <div class="tl-time">13:30<br>14:15</div>
           <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
@@ -779,7 +1057,8 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
 
-        <div class="tl-item">
+        <!-- Check-in -->
+        <div class="tl-item" data-chip="noosa">
           <div class="tl-time">14:15<br>15:15</div>
           <div class="tl-axis"><div class="tl-dot dot-purple"></div><div class="tl-line"></div></div>
           <div class="tl-body">
@@ -789,9 +1068,13 @@ a { color: inherit; text-decoration: none; }
             </div>
             <div class="tl-tags"><span class="tag tag-rest">Check-in from 2pm</span></div>
             <div class="tl-note">放行李、稍作休息，準備下午健行。</div>
+            <div class="tl-photos">
+              <img class="tl-photo" src="pics/Noosa River Retreat Holiday Apartments.JPG" alt="Noosa River Retreat" onclick="openLightbox(this.src)">
+            </div>
           </div>
         </div>
 
+        <!-- Drive to Noosa NP -->
         <div class="tl-item">
           <div class="tl-time">15:15<br>15:35</div>
           <div class="tl-axis"><div class="tl-dot sm dot-gray"></div><div class="tl-line"></div></div>
@@ -804,6 +1087,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
 
+        <!-- Noosa Coastal Walk -->
         <div class="tl-item">
           <div class="tl-time">15:35<br>17:00</div>
           <div class="tl-axis"><div class="tl-dot dot-green"></div><div class="tl-line"></div></div>
@@ -816,10 +1100,14 @@ a { color: inherit; text-decoration: none; }
             </div>
             <div class="tl-tags"><span class="tag tag-hike">Out-and-back（非 Loop）</span><span class="tag tag-hike">1.2km 單程</span><span class="tag tag-hike">約 75–100 分鐘</span></div>
             <div class="tl-note">沿海步道，有機會看到海豚。</div>
+            <div class="tl-photos">
+              <img class="tl-photo" src="pics/Noosa Coastal Walk.JPG" alt="Noosa Coastal Walk" onclick="openLightbox(this.src)">
+            </div>
           </div>
         </div>
 
-        <div class="tl-item">
+        <!-- Massimo's -->
+        <div class="tl-item" data-chip="noosa">
           <div class="tl-time">17:00<br>17:30</div>
           <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
           <div class="tl-body">
@@ -832,6 +1120,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
 
+        <!-- Dinner -->
         <div class="tl-item">
           <div class="tl-time">18:00<br>19:30</div>
           <div class="tl-axis"><div class="tl-dot dot-orange"></div></div>
@@ -850,10 +1139,9 @@ a { color: inherit; text-decoration: none; }
 
       <div class="section-label">🍽️ Day 1 餐廳與素食預算</div>
       <div class="food-cards">
-        <div class="food-row"><div class="fr-type">早餐</div><div class="fr-info"><div class="fr-name">The Lookout Cafe</div><div class="fr-veg">Veg / Vegan OK</div></div><div class="fr-budget">AUD 20–30</div></div>
-        <div class="food-row"><div class="fr-type">早餐備案</div><div class="fr-info"><div class="fr-name">The Coffee Club - Beerwah</div><div class="fr-veg">部分 Vegan 可調</div></div><div class="fr-budget">AUD 20–30</div></div>
-        <div class="food-row"><div class="fr-type">午餐</div><div class="fr-info"><div class="fr-name">Eumundi Markets 小吃</div><div class="fr-veg">素食容易找</div></div><div class="fr-budget">AUD 15–25</div></div>
-        <div class="food-row"><div class="fr-type">午餐備案</div><div class="fr-info"><div class="fr-name">Matso's Sunshine Coast</div><div class="fr-veg">Veg / Vegan 友好</div></div><div class="fr-budget">AUD 25–40</div></div>
+        <div class="food-row"><div class="fr-type">爬山後餐</div><div class="fr-info"><div class="fr-name">The Coffee Club Café - Beerwah</div><div class="fr-veg">部分 Vegan 可調</div></div><div class="fr-budget">AUD 20–30</div></div>
+        <div class="food-row"><div class="fr-type">爬山後備案</div><div class="fr-info"><div class="fr-name">The Lookout Cafe（Glass House）</div><div class="fr-veg">Veg / Vegan OK</div></div><div class="fr-budget">AUD 20–30</div></div>
+        <div class="food-row"><div class="fr-type">市集逛逛</div><div class="fr-info"><div class="fr-name">Eumundi Markets 小吃</div><div class="fr-veg">素食容易找</div></div><div class="fr-budget">AUD 視需要</div></div>
         <div class="food-row"><div class="fr-type">晚餐首選</div><div class="fr-info"><div class="fr-name">Leela Noosa</div><div class="fr-veg">素食咖哩選擇多</div></div><div class="fr-budget">AUD 20–30</div></div>
         <div class="food-row"><div class="fr-type">晚餐輕食</div><div class="fr-info"><div class="fr-name">Raw + Rice Noosa</div><div class="fr-veg">Tofu / Vegan OK</div></div><div class="fr-budget">AUD 17–25</div></div>
         <div class="food-row"><div class="fr-type">晚餐氣氛</div><div class="fr-info"><div class="fr-name">Somedays Pizza Noosa</div><div class="fr-veg">Veg / Vegan 選項</div></div><div class="fr-budget">AUD 30–40</div></div>
@@ -873,7 +1161,7 @@ a { color: inherit; text-decoration: none; }
 
       <div class="timeline">
 
-        <div class="tl-item">
+        <div class="tl-item" data-chip="farmersmarket">
           <div class="tl-time">07:00<br>08:10</div>
           <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
           <div class="tl-body">
@@ -898,7 +1186,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-chip="hotel">
           <div class="tl-time">08:25<br>09:00</div>
           <div class="tl-axis"><div class="tl-dot dot-purple"></div><div class="tl-line"></div></div>
           <div class="tl-body">
@@ -908,7 +1196,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-chip="hotel">
           <div class="tl-time">09:00</div>
           <div class="tl-axis"><div class="tl-dot dot-purple"></div><div class="tl-line"></div></div>
           <div class="tl-body">
@@ -945,7 +1233,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-chip="coolum">
           <div class="tl-time">10:00<br>12:00</div>
           <div class="tl-axis"><div class="tl-dot dot-green"></div><div class="tl-line"></div></div>
           <div class="tl-body">
@@ -953,8 +1241,12 @@ a { color: inherit; text-decoration: none; }
             <div class="tl-links">
               <a href="https://www.google.com/maps/search/?api=1&query=Mount%20Coolum%20Walking%20Trail" target="_blank" class="tl-link d2">📍 地圖</a>
             </div>
-            <div class="tl-tags"><span class="tag tag-hike">Grade 4</span><span class="tag tag-hike">Steep / Rocky</span><span class="tag tag-hike">約 2 小時 return</span></div>
+            <div class="tl-tags"><span class="tag tag-hike">Grade 4</span><span class="tag tag-hike">Steep / Rocky</span><span class="tag tag-hike">1.9km 來回</span><span class="tag tag-hike">約 2 小時</span></div>
             <div class="tl-note">官方 Grade 4，有陡峭岩石路段。<strong>攜帶充足水分</strong>，穿防滑登山鞋。</div>
+            <div class="tl-photos">
+              <img class="tl-photo" src="pics/Mount Coolum Track.JPG" alt="Mount Coolum" onclick="openLightbox(this.src)">
+              <img class="tl-photo" src="pics/Mount Coolum Track - 1.JPG" alt="Mount Coolum Summit" onclick="openLightbox(this.src)">
+            </div>
           </div>
         </div>
 
@@ -980,7 +1272,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-chip="viethaus">
           <div class="tl-time">12:50<br>14:00</div>
           <div class="tl-axis"><div class="tl-dot dot-orange"></div><div class="tl-line"></div></div>
           <div class="tl-body">
@@ -993,7 +1285,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
 
-        <div class="tl-item">
+        <div class="tl-item" data-chip="home">
           <div class="tl-time">14:00<br>16:00</div>
           <div class="tl-axis"><div class="tl-dot dot-blue"></div></div>
           <div class="tl-body">
@@ -1036,6 +1328,12 @@ a { color: inherit; text-decoration: none; }
 <!-- Mobile map-updated hint -->
 <div id="mapToast" class="map-toast">↓ 地圖已更新，收起行程可查看</div>
 
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">✕</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
 <script>
   var sidebar = document.getElementById('sidebar');
   var handleHint = document.getElementById('handleHint');
@@ -1044,6 +1342,18 @@ a { color: inherit; text-decoration: none; }
     if (window.innerWidth >= 768) return;
     var expanded = sidebar.classList.toggle('expanded');
     handleHint.textContent = expanded ? '▼ 收起' : '▲ 查看行程';
+  }
+
+  function setActiveChip(chipKey) {
+    var strip = document.getElementById('chip-day' + currentDay);
+    if (!strip) return;
+    strip.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('active'); });
+    if (!chipKey) return;
+    var target = strip.querySelector('[data-chip="' + chipKey + '"]');
+    if (target) {
+      target.classList.add('active');
+      target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
   }
 
   function switchDay(day, tabEl) {
@@ -1059,6 +1369,12 @@ a { color: inherit; text-decoration: none; }
     // Update maps
     document.querySelectorAll('.map-wrap').forEach(function(m) { m.classList.remove('active'); });
     document.getElementById('map-day' + day).classList.add('active');
+
+    // Switch chip strips + reset highlight
+    document.querySelectorAll('.chip-strip').forEach(function(s) { s.style.display = 'none'; });
+    var strip = document.getElementById('chip-day' + day);
+    if (strip) strip.style.display = 'flex';
+    setActiveChip(null);
 
     // Mobile: expand sidebar and scroll to top
     if (window.innerWidth < 768) {
@@ -1098,29 +1414,89 @@ a { color: inherit; text-decoration: none; }
     window._toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2200);
   }
 
+  // ── 拖曳分隔條 resize ──
+  (function() {
+    var divider = document.getElementById('resizeDivider');
+    var sidebarEl = document.getElementById('sidebar');
+    var isDragging = false;
+
+    function startDrag(e) {
+      if (window.innerWidth < 768) return;
+      isDragging = true;
+      divider.classList.add('dragging');
+      document.body.style.cursor = 'col-resize';
+      document.body.style.userSelect = 'none';
+      e.preventDefault();
+    }
+
+    function onDrag(clientX) {
+      if (!isDragging) return;
+      var newW = window.innerWidth - clientX;
+      newW = Math.max(280, Math.min(640, newW));
+      sidebarEl.style.width = newW + 'px';
+    }
+
+    function stopDrag() {
+      if (!isDragging) return;
+      isDragging = false;
+      divider.classList.remove('dragging');
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    }
+
+    divider.addEventListener('mousedown', startDrag);
+    document.addEventListener('mousemove', function(e) { onDrag(e.clientX); });
+    document.addEventListener('mouseup', stopDrag);
+
+    divider.addEventListener('touchstart', function(e) { startDrag(e.touches[0]); }, { passive: false });
+    document.addEventListener('touchmove', function(e) { if (isDragging) { onDrag(e.touches[0].clientX); e.preventDefault(); } }, { passive: false });
+    document.addEventListener('touchend', stopDrag);
+
+    // 視窗縮小時自動收縮 sidebar
+    window.addEventListener('resize', function() {
+      if (window.innerWidth < 768) return;
+      var currentW = parseInt(sidebarEl.style.width) || 420;
+      var maxAllowed = window.innerWidth - 320;
+      if (currentW > maxAllowed) {
+        sidebarEl.style.width = Math.max(280, maxAllowed) + 'px';
+      }
+    });
+  })();
+
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
   document.querySelector('.sidebar-body').addEventListener('click', function(e) {
-    // 如果點的是連結本身，讓它正常跳轉，不攔截
     if (e.target.closest('a')) return;
 
     var item = e.target.closest('.tl-item');
     if (!item) return;
 
-    // 取此 item 第一個 tl-link
-    var link = item.querySelector('.tl-link');
-    if (!link) return;
-
-    var embedUrl = convertToEmbed(link.href);
-    if (!embedUrl) return;
-
     // 更新選中狀態
     document.querySelectorAll('.tl-item').forEach(function(t) { t.classList.remove('selected'); });
     item.classList.add('selected');
 
-    // 更新地圖
-    var iframe = document.querySelector('.map-wrap.active iframe');
-    if (iframe) iframe.src = embedUrl;
+    // 底部 chip focus
+    setActiveChip(item.dataset.chip || null);
 
-    showMapToast();
+    // 更新地圖
+    var link = item.querySelector('.tl-link');
+    if (link) {
+      var embedUrl = convertToEmbed(link.href);
+      if (embedUrl) {
+        var iframe = document.querySelector('.map-wrap.active iframe');
+        if (iframe) iframe.src = embedUrl;
+        showMapToast();
+      }
+    }
   });
 </script>
 </body>
